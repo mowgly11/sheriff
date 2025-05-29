@@ -1319,11 +1319,15 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center space-x-4">
-                    <img src="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329" alt="LSSD Badge" class="h-16 hover:scale-110 transition-transform duration-300" draggable="false">
+                    <a href="#home" class="cursor-pointer">
+                        <img src="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329" alt="LSSD Badge" class="h-16 hover:scale-110 transition-transform duration-300" draggable="false">
+                    </a>
+                    <a href="#home" class="cursor-pointer">
                 <div>
-                        <h1 class="text-2xl font-bold tracking-wider">LOS SANTOS</h1>
-                        <p class="text-lg tracking-widest">SHERIFF'S DEPARTMENT</p>
+                            <h1 class="text-2xl font-bold tracking-wider">LOS SANTOS</h1>
+                            <p class="text-lg tracking-widest">SHERIFF'S DEPARTMENT</p>
                     </div>
+                    </a>
                 </div>
                 
                 <div class="hidden lg:flex space-x-8">
@@ -1670,9 +1674,9 @@
         <div class="modal-body">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Fallen hero cards will be dynamically inserted here -->
-            </div>
-        </div>
-    </div>
+                        </div>
+                    </div>
+                </div>
 
     <!-- Custom Alert -->
     <div id="customAlert" class="fixed top-4 right-0 transform translate-x-full transition-transform duration-300 z-50">
@@ -1680,11 +1684,11 @@
             <div class="flex items-center">
                 <div id="alertIcon" class="mr-3">
                     <i class="fas fa-check-circle text-green-500 text-xl"></i>
-                </div>
+                        </div>
                 <div class="flex-1">
                     <h3 id="alertTitle" class="font-bold text-gray-900"></h3>
                     <p id="alertMessage" class="text-gray-600"></p>
-                </div>
+                    </div>
                 <button onclick="hideAlert()" class="ml-4 text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times"></i>
                 </button>
@@ -1758,7 +1762,7 @@
             const alert = document.getElementById('customAlert');
             alert.classList.add('translate-x-full');
         }
-
+        
         // Contact form submission handler
         document.getElementById('contact-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1844,14 +1848,14 @@
         function openModal(newsId) {
             const news = window.newsData[newsId];
             if (news) {
-                modalTitle.textContent = news.title;
-                modalDate.textContent = news.date;
-                modalCategory.textContent = news.category;
-                modalBody.innerHTML = news.content;
-                
-                modalOverlay.classList.add('active');
-                modalContent.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            modalTitle.textContent = news.title;
+            modalDate.textContent = news.date;
+            modalCategory.textContent = news.category;
+            modalBody.innerHTML = news.content;
+            
+            modalOverlay.classList.add('active');
+            modalContent.classList.add('active');
+            document.body.style.overflow = 'hidden';
             }
         }
 
