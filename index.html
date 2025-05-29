@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official website of the Los Santos Sheriff's Department. Learn about our command staff, divisions, fallen heroes, and stay informed with the latest news and updates from LSSD.">
+    <title>Los Santos Sheriff's Department</title>
+    <link rel="icon" type="image/png" href="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        * {
+            font-family: 'Oswald', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom CSS for elements that need more specific styling */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://media.discordapp.net/attachments/1361089940464734290/1375874732137906268/SPOILER_Capture_decran_2025-05-24_164944.png?ex=68373b32&is=6835e9b2&hm=edd9b77770cbefad3b287589f73339bb266240145f902a0c6c85135eb67334fb&=&format=webp&quality=lossless&width=1500&height=843');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .badge {
+            animation: pulse 2s infinite;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: scale(1.2);
+            margin-bottom: 2rem;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #fef3c7;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #fbbf24;
+            transform: translateY(-2px);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #fbbf24;
+            transform: translateY(-2px);
+        }
+        
+        .department-title {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 2px solid transparent;
+        }
+
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .learn-more-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            color: #92400e;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .learn-more-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .learn-more-link:hover {
+            color: #f59e0b;
+        }
+
+        .learn-more-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .learn-more-link i {
+            transition: transform 0.3s ease;
+        }
+
+        .learn-more-link:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Form Buttons */
+        button[type="submit"] {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        button[type="submit"]:hover::before {
+            left: 100%;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer Links */
+        footer a {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #fbbf24;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #fbbf24 !important;
+        }
+
+        footer a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Social Media Icons */
+        .social-links a {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: rgba(251, 191, 36, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #fbbf24;
+            transform: translateY(-3px);
+        }
+
+        .social-links a:hover i {
+            color: #92400e;
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(251, 191, 36, 0.9);
+            color: #92400e;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #back-to-top:hover {
+            background: #fbbf24;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mobile Menu Links */
+        .mobile-nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .mobile-nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: #fbbf24;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav-link:hover::before {
+            transform: scaleY(1);
+        }
+
+        .mobile-nav-link:hover {
+            background: rgba(251, 191, 36, 0.1);
+            padding-left: 1.5rem;
+        }
+
+        /* Mobile Navigation Styles */
+        .mobile-menu {
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(146, 64, 14, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-nav-link {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu.active .mobile-nav-link {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu.active .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(5) { transition-delay: 0.5s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(6) { transition-delay: 0.6s; }
+
+        /* Hamburger Menu Animation */
+        .hamburger {
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .bar {
+            transition: all 0.3s ease;
+        }
+        
+        /* Command Staff Card Styles */
+        .deputy-card {
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: rgba(251, 191, 36, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 1px 3px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(0, 0, 0, 0.1),
+                inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .deputy-card:hover {
+            transform: translateY(-10px) scale(1.02) rotateX(5deg);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(0, 0, 0, 0.2),
+                inset 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .deputy-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(0, 0, 0, 0.2) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .deputy-card:hover::after {
+            opacity: 1;
+        }
+
+        .deputy-card .image-container {
+            position: relative;
+            overflow: hidden;
+            height: 380px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.3) 100%);
+            transform: translateZ(20px);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .deputy-card:hover .image-container {
+            transform: translateZ(30px);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.4),
+                inset 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .deputy-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: grayscale(20%);
+            transform: translateZ(10px);
+        }
+
+        .deputy-card:hover img {
+            transform: scale(1.1) translateZ(20px);
+            filter: grayscale(0%);
+        }
+
+        .deputy-card .content {
+            padding: 2rem;
+            background: rgba(146, 64, 14, 0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transform: translateZ(15px);
+            box-shadow: 
+                0 -5px 15px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .deputy-card:hover .content {
+            transform: translateZ(25px);
+            box-shadow: 
+                0 -8px 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .deputy-card .content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left;
+            transform: translateZ(5px);
+        }
+
+        .deputy-card:hover .content::before {
+            transform: scaleX(1) translateZ(5px);
+        }
+
+        .deputy-card .text-content {
+            transform: translateZ(10px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .deputy-card:hover .text-content {
+            transform: translateZ(20px);
+        }
+
+        .deputy-card h3 {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            color: #fef3c7;
+            transform: translateZ(5px);
+        }
+
+        .deputy-card:hover h3 {
+            transform: translateY(-5px) translateZ(10px);
+            color: #fbbf24;
+        }
+
+        .deputy-card .position {
+            color: #fbbf24;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            transform: translateZ(5px);
+            transition: all 0.3s ease;
+        }
+
+        .deputy-card:hover .position {
+            transform: translateZ(10px);
+        }
+
+        .deputy-card .description {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            text-align: center;
+            max-width: 320px;
+            transform: translateZ(5px);
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .deputy-card:hover .description {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 1.5rem;
+            transform: translateZ(15px);
+        }
+
+        .deputy-card .social-links {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .deputy-card:hover .social-links {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .deputy-card .social-links a {
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+
+        .deputy-card .social-links a:hover {
+            transform: translateY(-3px);
+            color: #fbbf24;
+        }
+
+        .deputy-card .social-links a:hover {
+            transform: translateY(-3px);
+            color: #fbbf24;
+        }
+        
+        .division-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .division-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .division-card .icon-container {
+            width: 80px;
+            height: 80px;
+            background: #fef3c7;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .division-card .icon-container i {
+            font-size: 2rem;
+            color: #92400e;
+            transition: all 0.3s ease;
+        }
+
+        .division-card:hover .icon-container {
+            background: #fbbf24;
+            transform: rotate(-10deg);
+        }
+
+        .division-card:hover .icon-container i {
+            color: #92400e;
+            transform: scale(1.1);
+        }
+
+        .division-card .content {
+            text-align: center;
+        }
+
+        .division-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .division-card .subtitle {
+            color: #b45309;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .division-card p {
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .division-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .division-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .division-card .image-container {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .division-card:hover .image-container {
+            transform: translateZ(20px);
+        }
+
+        .division-card .image-container img {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .division-card:hover .image-container img {
+            transform: scale(1.1) translateZ(10px);
+        }
+
+        .division-card .content {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .division-card:hover .content {
+            transform: translateZ(30px);
+        }
+
+        .division-card .learn-more {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .division-card:hover .learn-more {
+            transform: translateZ(40px);
+        }
+
+        .division-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(251, 191, 36, 0.1) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .division-card:hover::after {
+            opacity: 1;
+        }
+
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: #fef3c7;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .icon-wrapper i {
+            font-size: 1.5rem;
+            color: #92400e;
+            transition: all 0.3s ease;
+        }
+
+        .division-card:hover .icon-wrapper {
+            background: #fbbf24;
+            transform: rotate(-10deg);
+        }
+
+        .division-card:hover .icon-wrapper i {
+            color: #92400e;
+            transform: scale(1.1);
+        }
+
+        .division-card .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .memorial-card {
+            transform: translateY(0);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .memorial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .memorial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+        }
+
+        .memorial-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .memorial-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .memorial-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .memorial-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .news-card .image-container {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .news-card .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .news-card:hover .image-container img {
+            transform: scale(1.1);
+        }
+
+        .news-card .category-badge {
+            position: absolute;
+            top: 1.25rem;
+            left: 1.25rem;
+            z-index: 20;
+            padding: 0.5rem 1.25rem;
+            background: rgba(251, 191, 36, 0.95);
+            color: #92400e;
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            border-radius: 9999px;
+            backdrop-filter: blur(4px);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .news-card:hover .category-badge {
+            transform: translateY(-5px);
+            background: #fbbf24;
+        }
+
+        .news-card .content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            background: white;
+            position: relative;
+        }
+        
+        .news-card .content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .news-card:hover .content::before {
+            transform: scaleX(1);
+        }
+
+        .news-card .date {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .news-card .date i {
+            color: #f59e0b;
+        }
+
+        .news-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+        }
+
+        .news-card:hover h3 {
+            color: #f59e0b;
+        }
+
+        .news-card .excerpt {
+            color: #4b5563;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .news-card .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #f59e0b;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+            width: fit-content;
+        }
+
+        .news-card .read-more::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #f59e0b;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .news-card .read-more:hover {
+            color: #92400e;
+        }
+
+        .news-card .read-more:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .news-card .read-more i {
+            transition: transform 0.3s ease;
+            margin-left: 0.25rem;
+        }
+
+        .news-card .read-more:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: #fef3c7;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 50px -12px rgba(146, 64, 14, 0.3);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .modal-content.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #92400e;
+            color: #fef3c7;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1002;
+        }
+
+        .modal-close:hover {
+            background: #f59e0b;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            margin-bottom: 2rem;
+            padding-right: 3rem;
+            border-bottom: 2px solid rgba(146, 64, 14, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .modal-header h2 {
+            color: #92400e;
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header .meta {
+            color: #b45309;
+            font-size: 0.875rem;
+        }
+
+        .modal-body {
+            color: #78350f;
+            line-height: 1.75;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(146, 64, 14, 0.1);
+        }
+
+        .modal-body h3 {
+            color: #92400e;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .modal-body ul {
+            background: rgba(251, 191, 36, 0.1);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.5rem;
+            color: #78350f;
+        }
+
+        .modal-body li:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content.active .modal-header,
+        .modal-content.active .modal-body {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .modal-content.active .modal-body {
+            animation-delay: 0.2s;
+        }
+
+        /* Tribute Modal Styles */
+        #tributeModalContent {
+            background: #1f2937;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        #tributeModalContent .modal-header {
+            border-bottom: 2px solid rgba(251, 191, 36, 0.2);
+        }
+
+        #tributeModalContent .modal-header h2 {
+            color: #fef3c7;
+        }
+
+        #tributeModalContent .modal-header .meta {
+            color: #fbbf24;
+        }
+
+        #tributeModalContent .modal-body {
+            color: #e5e7eb;
+        }
+
+        #tributeModalContent .modal-body h3 {
+            color: #fbbf24;
+        }
+
+        #tributeModalContent .modal-body ul {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        #tributeModalContent .modal-body li {
+            color: #e5e7eb;
+        }
+
+        #tributeModalContent .modal-close {
+            background: #92400e;
+            color: #fef3c7;
+        }
+
+        #tributeModalContent .modal-close:hover {
+            background: #f59e0b;
+        }
+
+        /* Command Staff Modal Styles */
+        #commandStaffModalContent {
+            background: #fef3c7;
+            box-shadow: 0 25px 50px -12px rgba(146, 64, 14, 0.3);
+        }
+
+        #commandStaffModalContent .modal-header {
+            border-bottom: 2px solid rgba(146, 64, 14, 0.2);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        #commandStaffModalContent .modal-header h2 {
+            color: #92400e;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        #commandStaffModalContent .modal-header p {
+            color: #78350f;
+            font-size: 1.125rem;
+        }
+
+        #commandStaffModalContent .modal-body {
+            padding: 0 1rem 2rem;
+        }
+
+        #commandStaffModalContent .deputy-card {
+            background: rgba(146, 64, 14, 0.95);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        #commandStaffModalContent .deputy-card .content {
+            background: rgba(146, 64, 14, 0.95);
+        }
+
+        #commandStaffModalContent .deputy-card h3 {
+            color: #fef3c7;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        #commandStaffModalContent .deputy-card .position {
+            color: #fbbf24;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #commandStaffModalContent .deputy-card .description p {
+            color: #e5e7eb;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        #commandStaffModalContent .modal-close {
+            background: #92400e;
+            color: #fef3c7;
+        }
+
+        #commandStaffModalContent .modal-close:hover {
+            background: #f59e0b;
+        }
+
+        #commandStaffModalContent .deputy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(146, 64, 14, 0.3);
+        }
+
+        #commandStaffModalContent .deputy-card:hover h3 {
+            color: #fbbf24;
+        }
+
+        #commandStaffModalContent .deputy-card:hover .position {
+            color: #fef3c7;
+        }
+
+        /* Fallen Heroes Modal Styles */
+        #fallenHeroesModalContent {
+            background: #1f2937;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        #fallenHeroesModalContent .modal-header {
+            border-bottom: 2px solid rgba(251, 191, 36, 0.2);
+        }
+
+        #fallenHeroesModalContent .modal-header h2 {
+            color: #fef3c7;
+        }
+
+        #fallenHeroesModalContent .modal-header .meta {
+            color: #fbbf24;
+        }
+
+        #fallenHeroesModalContent .modal-body {
+            color: #e5e7eb;
+        }
+
+        #fallenHeroesModalContent .modal-body h3 {
+            color: #fbbf24;
+        }
+
+        #fallenHeroesModalContent .modal-body ul {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        #fallenHeroesModalContent .modal-body li {
+            color: #e5e7eb;
+        }
+
+        #fallenHeroesModalContent .modal-close {
+            background: #92400e;
+            color: #fef3c7;
+        }
+
+        #fallenHeroesModalContent .modal-close:hover {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body class="font-sans bg-yellow-50">
+    <!-- Navigation -->
+    <nav class="bg-yellow-800 text-yellow-50 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <img src="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329" alt="LSSD Badge" class="h-16 hover:scale-110 transition-transform duration-300" draggable="false">
+                <div>
+                        <h1 class="text-2xl font-bold tracking-wider">LOS SANTOS</h1>
+                        <p class="text-lg tracking-widest">SHERIFF'S DEPARTMENT</p>
+                    </div>
+                </div>
+                
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#home" class="nav-link text-base">Home</a>
+                    <a href="#Memoriam" class="nav-link text-base">Memoriam</a>
+                    <a href="#team" class="nav-link text-base">Our Team</a>
+                    <a href="#divisions" class="nav-link text-base">Divisions</a>
+                    <a href="#newsletter" class="nav-link text-base">Newsletter</a>
+                    <a href="#contact" class="nav-link text-base">Contact</a>
+                </div>
+                
+                <button class="lg:hidden focus:outline-none hamburger" id="mobile-menu-button">
+                    <div class="bar w-6 h-0.5 bg-yellow-50 mb-1.5"></div>
+                    <div class="bar w-6 h-0.5 bg-yellow-50 mb-1.5"></div>
+                    <div class="bar w-6 h-0.5 bg-yellow-50"></div>
+                </button>
+                </div>
+                
+        <!-- Mobile Menu -->
+            <div class="mobile-menu lg:hidden hidden py-4" id="mobile-menu">
+                <a href="#home" class="mobile-nav-link block py-3 px-4 hover:bg-yellow-700 rounded-lg transition-colors duration-300 text-base">Home</a>
+                <a href="#Memoriam" class="mobile-nav-link block py-3 px-4 hover:bg-yellow-700 rounded-lg transition-colors duration-300 text-base">Memoriam</a>
+                <a href="#team" class="mobile-nav-link block py-3 px-4 hover:bg-yellow-700 rounded-lg transition-colors duration-300 text-base">Our Team</a>
+                <a href="#divisions" class="mobile-nav-link block py-3 px-4 hover:bg-yellow-700 rounded-lg transition-colors duration-300 text-base">Divisions</a>
+                <a href="#newsletter" class="mobile-nav-link block py-3 px-4 hover:bg-yellow-700 rounded-lg transition-colors duration-300 text-base">Newsletter</a>
+                <a href="#contact" class="mobile-nav-link block py-3 px-4 hover:bg-yellow-700 rounded-lg transition-colors duration-300 text-base">Contact</a>
+                        </div>
+                    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content text-center">
+            <div class="badge inline-block p-6 rounded-full">
+                <img src="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329" alt="LSSD Badge" class="h-32" draggable="false">
+                        </div>
+            <h1 class="text-4xl lg:text-6xl font-bold mb-6 department-title text-white leading-tight">LOS SANTOS SHERIFF'S DEPARTMENT</h1>
+            <p class="text-xl lg:text-2xl mb-10 text-yellow-100 max-w-2xl mx-auto">"<i>Steel in our badge. Fire in our hearts. Justice in our hands.</i>" <br> Protecting and Serving Los Santos County with Honor, Integrity, and Dedication Since 1850</p>
+            <div class="flex flex-col lg:flex-row justify-center gap-6">
+                <a href="#contact" class="hero-button bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-4 px-10 rounded-lg text-lg transform hover:scale-105 transition-all duration-300">Report a Crime</a>
+                <a href="#divisions" class="hero-button bg-transparent hover:bg-yellow-900 text-yellow-50 font-bold py-4 px-10 border-2 border-yellow-50 rounded-lg text-lg transform hover:scale-105 transition-all duration-300">Our Divisions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Team Section -->
+    <section class="py-16 bg-yellow-800 text-yellow-50" id="team">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">MEET OUR COMMAND STAFF</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Command staff cards will be dynamically inserted here -->
+                            </div>
+            <div class="text-center mt-12">
+                <button onclick="openCommandStaffModal()" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-3 px-6 rounded-lg transition">
+                    Meet Our Full Command Staff <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divisions Section -->
+    <section class="py-20 bg-gradient-to-b from-yellow-50 to-white" id="divisions">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-yellow-800">OUR DIVISIONS</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-16">Discover the specialized units that work together to protect and serve our community with excellence and dedication.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Division cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Memoriam Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-900 to-gray-800" id="Memoriam">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-yellow-50">IN MEMORIAM</h2>
+            <p class="text-center max-w-3xl mx-auto mb-16 text-gray-300">
+                We honor the brave men and women of the Los Santos Sheriff's Department who made the ultimate sacrifice in the line of duty. Their dedication and courage will never be forgotten.
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Memorial cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stay Informed Section -->
+    <section class="py-20 bg-gradient-to-b from-yellow-50 to-white" id="newsletter">
+        <div class="container mx-auto px-4">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-4 text-yellow-800">STAY INFORMED</h2>
+                <p class="text-center max-w-3xl mx-auto mb-16 text-gray-600">
+                    Keep up to date with the latest news, community events, and important updates from the Los Santos Sheriff's Department.
+                </p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- News cards will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Latest Upload Section -->
+    <section class="py-20 bg-gradient-to-b from-white to-yellow-50" id="latestUpload">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-yellow-800">OUR LATEST UPLOAD</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Watch our latest video showcasing the Los Santos Sheriff's Department in action.</p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-2xl">
+                    <iframe 
+                        class="absolute top-0 left-0 w-full h-full"
+                        src=""
+                        title=""
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 bg-gradient-to-b from-yellow-50 to-white" id="contact">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-yellow-800">CONTACT US</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-16">Get in touch with us. We're here to serve and protect our community.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <div class="bg-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-2xl font-bold mb-6 text-yellow-800 flex items-center">
+                            <i class="fas fa-building text-yellow-600 mr-3"></i>
+                            Department Headquarters
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start group">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4 group-hover:bg-yellow-200 transition-colors duration-300">
+                                    <i class="fas fa-map-marker-alt text-yellow-800"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Los Santos Sheriff's Department</p>
+                                    <p class="text-gray-600">Sandy Shores, San Andreas 90001</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start group">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4 group-hover:bg-yellow-200 transition-colors duration-300">
+                                    <i class="fas fa-phone-alt text-yellow-800"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Main Line</p>
+                                    <p class="text-gray-600">(520) 491-4537</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start group">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4 group-hover:bg-yellow-200 transition-colors duration-300">
+                                    <i class="fas fa-envelope text-yellow-800"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">General Inquiries</p>
+                                    <p class="text-gray-600">info@lscounty.life</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sandy Shores Station -->
+                    <div class="bg-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-2xl font-bold mb-6 text-yellow-800 flex items-center">
+                            <i class="fas fa-shield-alt text-yellow-600 mr-3"></i>
+                            Sandy Shores Station
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start group">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4 group-hover:bg-yellow-200 transition-colors duration-300">
+                                    <i class="fas fa-map-marker-alt text-yellow-800"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Sandy Shores Sheriff's Station</p>
+                                    <p class="text-gray-600">Sandy Shores, San Andreas 90210</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start group">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4 group-hover:bg-yellow-200 transition-colors duration-300">
+                                    <i class="fas fa-phone text-yellow-800"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Station Phone</p>
+                                    <p class="text-gray-600">(520) 491-4537</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-800">Send Us a Message</h3>
+                    <form id="contact-form" class="space-y-6" action="https://formspree.io/f/xblonqje"
+                    method="POST">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                                <input type="text" id="contact-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                <input type="email" id="contact-email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="contact-phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                            <select id="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300">
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="compliment">Compliment/Commendation</option>
+                                <option value="complaint">Complaint</option>
+                                <option value="records">Records Request</option>
+                                <option value="employment">Employment Information</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300" required></textarea>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" id="non-emergency" class="w-4 h-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded" required>
+                            <label for="non-emergency" class="text-sm text-gray-600">I confirm this is not an emergency (for emergencies, dial 911)</label>
+                        </div>
+                        <div class="g-recaptcha" data-sitekey="6Lcm500rAAAAAPWqAn9s2KOl_QkPXf-bgEuPsi4i"></div>
+                        <button type="submit" class="w-full bg-yellow-800 hover:bg-yellow-900 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
+                            Send Message
+                            <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+                
+    <!-- Footer -->
+    <footer class="bg-yellow-900 text-yellow-50 pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-400">About LSSD</h3>
+                    <p class="mb-4 text-white">
+                        The Los Santos Sheriff's Department has served and protected the communities of Los Santos County since 1850.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://discord.gg/DaDySRsTHm" class="text-gray-400 hover:text-white" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://www.youtube.com/channel/UCGyrcvbcBxh0Zamv_V_bpZg" class="text-gray-400 hover:text-white" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-400">Emergency Contacts</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fas fa-phone-alt text-red-500 mr-2"></i> <span class="font-bold">911</span> - Emergency</li>
+                        <li class="flex items-center"><i class="fas fa-phone text-yellow-400 mr-2"></i> <span>(520) 491-4537</span> - Non-Emergency</li>
+                        <li class="flex items-center"><i class="fas fa-comment text-yellow-400 mr-2"></i> <span>Text 911</span> - For hearing impaired</li>
+                        <li class="flex items-center"><i class="fas fa-globe text-green-400 mr-2"></i> <span>lscounty.life</span> - Offical Website</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6">
+                <div class="text-center">
+                    <p class="text-white text-sm">
+                        &copy; 2025 Los Santos Sheriff's Department. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-yellow-800 text-yellow-50 p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <!-- Modal Content -->
+    <div class="modal-content" id="modalContent">
+        <button class="modal-close" onclick="closeModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-header">
+            <h2 id="modalTitle"></h2>
+            <div class="meta">
+                <span id="modalDate"></span> • <span id="modalCategory"></span>
+            </div>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+
+    <!-- Tribute Modal -->
+    <div class="modal-overlay" id="tributeModalOverlay"></div>
+    <div class="modal-content" id="tributeModalContent">
+        <button class="modal-close" onclick="closeTributeModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-header">
+            <h2 id="tributeTitle" class="text-3xl font-bold text-yellow-50"></h2>
+            <div class="meta text-yellow-200">
+                <span id="tributeEOW"></span>
+            </div>
+        </div>
+        <div class="modal-body text-gray-300" id="tributeBody"></div>
+    </div>
+
+    <!-- Command Staff Modal -->
+    <div class="modal-overlay" id="commandStaffModalOverlay"></div>
+    <div class="modal-content" id="commandStaffModalContent" style="max-width: 1200px;">
+        <button class="modal-close" onclick="closeCommandStaffModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-header">
+            <h2 class="text-3xl font-bold text-yellow-800">Command Staff</h2>
+            <p class="text-gray-600">Meet the leaders who guide our department with dedication and expertise</p>
+        </div>
+        <div class="modal-body">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Command staff cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Fallen Heroes Modal -->
+    <div class="modal-overlay" id="fallenHeroesModalOverlay"></div>
+    <div class="modal-content" id="fallenHeroesModalContent" style="max-width: 1200px; background: #1f2937;">
+        <button class="modal-close" onclick="closeFallenHeroesModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-header border-b border-gray-700">
+            <h2 class="text-3xl font-bold text-yellow-50">Fallen Heroes</h2>
+            <p class="text-gray-400">Honoring those who made the ultimate sacrifice in service to our community</p>
+        </div>
+        <div class="modal-body">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Fallen hero cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert -->
+    <div id="customAlert" class="fixed top-4 right-0 transform translate-x-full transition-transform duration-300 z-50">
+        <div class="bg-white rounded-lg shadow-xl p-4 max-w-sm">
+            <div class="flex items-center">
+                <div id="alertIcon" class="mr-3">
+                    <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 id="alertTitle" class="font-bold text-gray-900"></h3>
+                    <p id="alertMessage" class="text-gray-600"></p>
+                </div>
+                <button onclick="hideAlert()" class="ml-4 text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle with animations
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Custom Alert Functions
+        function showAlert(title, message, type = 'success') {
+            const alert = document.getElementById('customAlert');
+            const alertTitle = document.getElementById('alertTitle');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertIcon = document.getElementById('alertIcon');
+            
+            alertTitle.textContent = title;
+            alertMessage.textContent = message;
+            
+            // Update icon based on type
+            if (type === 'success') {
+                alertIcon.innerHTML = '<i class="fas fa-check-circle text-green-500 text-xl"></i>';
+            } else {
+                alertIcon.innerHTML = '<i class="fas fa-exclamation-circle text-red-500 text-xl"></i>';
+            }
+            
+            // Show alert
+            alert.classList.remove('translate-x-full');
+            
+            // Auto hide after 5 seconds
+            setTimeout(hideAlert, 5000);
+        }
+        
+        function hideAlert() {
+            const alert = document.getElementById('customAlert');
+            alert.classList.add('translate-x-full');
+        }
+
+        // Contact form submission handler
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            
+            try {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                
+                // Get reCAPTCHA response
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (!recaptchaResponse) {
+                    showAlert('Error', 'Please complete the reCAPTCHA verification.', 'error');
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                    return;
+                }
+                
+                // Explicitly collect form data
+                const formData = {
+                    name: document.getElementById('contact-name').value,
+                    email: document.getElementById('contact-email').value,
+                    phone: document.getElementById('contact-phone').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value,
+                    'g-recaptcha-response': recaptchaResponse
+                };
+                
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    showAlert('Success!', 'Your message has been sent successfully. We will respond as soon as possible.', 'success');
+                    form.reset();
+                    grecaptcha.reset(); // Reset reCAPTCHA after successful submission
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                showAlert('Error', 'There was a problem sending your message. Please try again later.', 'error');
+                console.error('Error:', error);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // News data is loaded from data.json via script.js
+        // Modal elements
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalContent = document.getElementById('modalContent');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDate = document.getElementById('modalDate');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalBody = document.getElementById('modalBody');
+
+        function openModal(newsId) {
+            const news = window.newsData[newsId];
+            if (news) {
+                modalTitle.textContent = news.title;
+                modalDate.textContent = news.date;
+                modalCategory.textContent = news.category;
+                modalBody.innerHTML = news.content;
+                
+                modalOverlay.classList.add('active');
+                modalContent.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            modalContent.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside
+        modalOverlay.addEventListener('click', closeModal);
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Command Staff Modal functionality
+        const commandStaffModalOverlay = document.getElementById('commandStaffModalOverlay');
+        const commandStaffModalContent = document.getElementById('commandStaffModalContent');
+
+        function openCommandStaffModal() {
+            commandStaffModalOverlay.classList.add('active');
+            commandStaffModalContent.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCommandStaffModal() {
+            commandStaffModalOverlay.classList.remove('active');
+            commandStaffModalContent.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close command staff modal when clicking outside
+        commandStaffModalOverlay.addEventListener('click', closeCommandStaffModal);
+
+        // Close command staff modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeCommandStaffModal();
+            }
+        });
+    </script>
+</body>
+</html>

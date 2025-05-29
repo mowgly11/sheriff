@@ -1,0 +1,182 @@
+{
+  "commandStaff": {
+    "title": "MEET OUR COMMAND STAFF",
+    "members": [
+      {
+        "name": "Wade Callahan",
+        "position": "Sheriff",
+        "image": "https://placehold.co/400x500/92400e/fef3c7?text=Sheriff",
+        "description": "With over 30 years of service, Sheriff Callahan leads the department with integrity and dedication to community policing. His leadership has transformed our approach to public safety."
+      },
+      {
+        "name": "DJ",
+        "position": "Undersheriff",
+        "image": "https://placehold.co/400x500/92400e/fef3c7?text=Undersheriff",
+        "description": "Undersheriff DJ oversees daily operations and specializes in crisis management and inter-agency coordination. His innovative approach has strengthened our community partnerships."
+      },
+      {
+        "name": "César Ramirez",
+        "position": "Assistant Sheriff",
+        "image": "https://placehold.co/400x500/92400e/fef3c7?text=Assistant+Sheriff",
+        "description": "Assistant Sheriff Ramirez commands all patrol operations and has implemented innovative community policing strategies that have significantly reduced crime rates."
+      },
+      {
+        "name": "Raven Blackwood",
+        "position": "Captain",
+        "image": "https://placehold.co/400x500/92400e/fef3c7?text=Captain",
+        "description": "Captain Blackwood leads all investigative units and has solved numerous high-profile cases throughout his 22-year career. His expertise in criminal investigations is unmatched."
+      }
+    ],
+    "additionalStaff": [
+      {
+        "name": "Buck Waller",
+        "position": "Lieutenant - Watch Commander",
+        "image": "https://placehold.co/400x500/92400e/fef3c7?text=Lieutenant",
+        "description": "Lieutenant Waller oversees daily patrol operations and coordinates emergency response across all shifts."
+      },
+      {
+        "name": "Miguel James",
+        "position": "Lieutenant - Detective Bureau",
+        "image": "https://placehold.co/400x500/92400e/fef3c7?text=Lieutenant",
+        "description": "Lieutenant James leads major crime investigations and coordinates with federal agencies on complex cases."
+      }
+    ]
+  },
+  "divisions": {
+    "title": "OUR DIVISIONS",
+    "subtitle": "Discover the specialized units that work together to protect and serve our community with excellence and dedication.",
+    "divisions": [
+      {
+        "name": "Patrol Division",
+        "subtitle": "24/7 Community Protection",
+        "icon": "fas fa-car-side",
+        "description": "Our uniformed patrol deputies are the backbone of the department, providing 24/7 coverage across Los Santos County."
+      },
+      {
+        "name": "Detective Bureau",
+        "subtitle": "Criminal Investigations",
+        "icon": "fas fa-search",
+        "description": "Our detectives investigate major crimes, working tirelessly to bring justice to victims and their families."
+      },
+      {
+        "name": "Special Enforcement",
+        "subtitle": "Tactical Response",
+        "icon": "fas fa-shield-alt",
+        "description": "Highly trained teams ready to respond to the most dangerous situations and critical incidents."
+      },
+      {
+        "name": "Internal Affairs",
+        "subtitle": "Professional Standards",
+        "icon": "fas fa-balance-scale",
+        "description": "Ensuring the highest standards of professional conduct and accountability within our department."
+      },
+      {
+        "name": "Custody Division",
+        "subtitle": "Detention Services",
+        "icon": "fas fa-building",
+        "description": "Responsible for the secure and humane detention of inmates in our custody facilities."
+      },
+      {
+        "name": "Training & Recruitment",
+        "subtitle": "Professional Development",
+        "icon": "fas fa-graduation-cap",
+        "description": "Developing future law enforcement leaders through comprehensive training and professional development programs."
+      }
+    ]
+  },
+  "memoriam": {
+    "title": "IN MEMORIAM",
+    "subtitle": "We honor the brave men and women of the Los Santos Sheriff's Department who made the ultimate sacrifice in the line of duty. Their dedication and courage will never be forgotten.",
+    "fallenHeroes": [
+      {
+        "name": "Captain Emilia Perez",
+        "endOfWatch": "August 28, 2024",
+        "image": "assets/mem_badge.svg",
+        "description": "Captain Perez was killed while leading a tactical response to an armed bank robbery. Her decisive actions saved numerous hostages and prevented further loss of life.",
+        "yearsOfService": 18
+      },
+      {
+        "name": "Detective John Coffey",
+        "endOfWatch": "November 12, 2024",
+        "image": "assets/mem_badge.svg",
+        "description": "Detective Coffey was fatally shot while conducting an undercover investigation into organized crime. His dedication to justice and meticulous investigative work led to numerous successful prosecutions.",
+        "yearsOfService": 5
+      },
+      {
+        "name": "Detective Cumrade Gun",
+        "endOfWatch": "November 12, 2024",
+        "image": "assets/mem_badge.svg",
+        "description": "Detective Gun was killed while investigating a major drug trafficking operation. His extensive experience and leadership in the Narcotics Division had made him a key figure in combating organized crime.",
+        "yearsOfService": 12
+      },
+      {
+        "name": "Deputy Ping Gun",
+        "endOfWatch": "March 6, 2025",
+        "image": "assets/mem_badge.svg",
+        "description": "Deputy Gun was killed in a drive-by shooting while completing paperwork in his patrol vehicle. Known for his dedication to community policing, he was a mentor to many young deputies.",
+        "yearsOfService": 8
+      }
+    ]
+  },
+  "news": {
+    "title": "STAY INFORMED",
+    "subtitle": "Keep up to date with the latest news, community events, and important updates from the Los Santos Sheriff's Department.",
+    "articles": [
+      {
+        "title": "LSSD Assists SAHP in High-Risk Breach Operation on Illegal Weapons Bench in Paleto Bay",
+        "date": "May 24, 2025",
+        "category": "Latest News",
+        "image": "https://media.discordapp.net/attachments/1278490038799302759/1375999179515498596/20250524140321_1.png?ex=683857d9&is=68370659&hm=895622f9ff87a3ecd5e4158420b75b5d01f5d90fba67f3674de69d6f52afc295&=&format=webp&quality=lossless&width=1530&height=861",
+        "excerpt": "Paleto Bay, San Andreas – 25 May 2025 — In a joint tactical operation conducted in the early hours of the morning,",
+        "fullContent": {
+          "image": "https://media.discordapp.net/attachments/1278490038799302759/1375999179515498596/20250524140321_1.png?ex=683857d9&is=68370659&hm=895622f9ff87a3ecd5e4158420b75b5d01f5d90fba67f3674de69d6f52afc295&=&format=webp&quality=lossless&width=1530&height=861",
+          "paragraphs": ["Paleto Bay, San Andreas – 25 May 2025 — In a joint tactical operation conducted in the early hours of the morning, the Los Santos Sheriff's Department (LSSD) lent critical support to the San Andreas Highway Patrol (SAHP) in executing a breach and clear mission on a suspected illegal weapons manufacturing site in rural Paleto Bay.Authorities had been monitoring the property — a remote, fortified barn on the outskirts of town — for several weeks after intelligence indicated it was housing a clandestine weapon-crafting bench used in the assembly and distribution of unregistered firearms."],
+          "highlights": []
+        }
+      },
+      {
+        "title": "STAY TUNED",
+        "date": "Soon",
+        "category": "Upcoming Event",
+        "image": "https://placehold.co/800x400/fef3c7/92400e?text=Soon",
+        "excerpt": "Stay tuned for news and department updates",
+        "fullContent": {
+          "image": "https://placehold.co/800x400/fef3c7/92400e?text=Soon",
+          "paragraphs": [],
+          "highlights": []
+        }
+      },
+      {
+        "title": "BCSO Receives Major Budget Increase, Transforms Into LSSD",
+        "date": "May 20, 2025",
+        "category": "Achievement",
+        "image": "assets/dept.webp",
+        "excerpt": "The department received a multi-million-dollar increase in funding for fiscal year 2025.",
+        "fullContent": {
+          "image": "assets/dept.webp",
+          "paragraphs": [
+            "Los Santos, San Andreas – In a landmark move aimed at improving public safety and expanding operational capabilities, the Blaine County Sheriff's Office (BCSO) has officially transitioned into the Los Santos Sheriff's Department (LSSD) following a significant budget increase approved by the County Board of Supervisors. The transformation comes as part of a broader regional initiative to modernize law enforcement infrastructure, enhance cross-jurisdictional coordination, and better serve both urban and rural communities throughout Los Santos County."
+          ],
+          "highlights": [
+            "Advanced equipment and vehicle upgrades",
+            "Expansion of specialized divisions, including K-9, Air Support, and Major Crimes",
+            "Officer training, recruitment, and retention programs",
+            "Upgrades to department facilities and digital systems",
+            "Updated uniforms and vehicle liveries",
+            "A streamlined command structure",
+            "Enhanced community policing initiatives",
+            "A dedicated Memoriam division to honor fallen deputies"
+          ]
+        }
+      }
+    ]
+  },
+  "latestUpload": {
+    "title": "OUR LATEST UPLOAD",
+    "subtitle": "Watch our latest video showcasing the Los Santos Sheriff's Department in action.",
+    "video": {
+      "url": "https://www.youtube.com/embed/CI3JrQtw5Yo",
+      "title": "LSSD Latest Video"
+    }
+  }
+} 
