@@ -548,6 +548,245 @@
         .submit-button:active {
             transform: translateY(0);
         }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 1rem;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+                text-align: center;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+                text-align: center;
+            }
+
+            .hero-button {
+                width: 100%;
+                text-align: center;
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .benefit-card {
+                padding: 2rem;
+                min-height: 350px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .benefit-card i {
+                font-size: 2.5rem;
+                margin: 0 auto 1rem;
+            }
+
+            .benefit-card h3 {
+                font-size: 1.25rem;
+                text-align: center;
+            }
+
+            .benefit-card p {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .requirement-item {
+                padding: 1.5rem;
+                text-align: center;
+            }
+
+            .requirement-item h3 {
+                font-size: 1.25rem;
+                text-align: center;
+            }
+
+            .requirement-item p {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .requirement-item .icon {
+                font-size: 1.5rem;
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 1rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+                text-align: center;
+            }
+
+            .form-section h3 {
+                font-size: 1.25rem;
+                text-align: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .form-input,
+            .form-textarea {
+                padding: 0.75rem;
+                font-size: 0.95rem;
+                text-align: center;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            .submit-button {
+                padding: 1rem;
+                font-size: 1rem;
+                margin: 2rem auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .checkbox-label {
+                font-size: 0.85rem;
+                text-align: center;
+            }
+
+            .form-checkbox-wrapper {
+                justify-content: center;
+            }
+
+            .g-recaptcha {
+                display: flex;
+                justify-content: center;
+                margin: 1rem 0;
+            }
+        }
+
+        /* Additional Mobile Optimizations */
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .benefit-card {
+                padding: 1.5rem;
+                min-height: 300px;
+                text-align: center;
+            }
+
+            .benefit-card i {
+                font-size: 2rem;
+                margin: 0 auto 1rem;
+            }
+
+            .benefit-card h3 {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .benefit-card p {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            .requirement-item {
+                padding: 1.25rem;
+                text-align: center;
+            }
+
+            .requirement-item h3 {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .requirement-item p {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            .form-section {
+                padding: 1.25rem;
+                text-align: center;
+            }
+
+            .form-section h3 {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .form-input,
+            .form-textarea {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            .form-label {
+                font-size: 0.85rem;
+                text-align: center;
+            }
+
+            .checkbox-label {
+                font-size: 0.8rem;
+                text-align: center;
+            }
+        }
+
+        /* Landscape Mode Optimizations */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .hero {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                padding: 3rem 1rem;
+            }
+
+            .benefit-card {
+                min-height: 250px;
+            }
+        }
+
+        /* Tablet Optimizations */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .benefit-card {
+                min-height: 350px;
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body class="bg-yellow-50">
