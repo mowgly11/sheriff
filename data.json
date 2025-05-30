@@ -91,7 +91,12 @@
       {
         "name": "Captain Emilia Perez",
         "endOfWatch": "August 28, 2024",
-        "image": "assets/mem_badge.svg",
+        "image": "assets/emilia_perez.webp",
+        "imageSize": {
+          "width": "w-64",
+          "height": "h-64"
+        },
+        "fullscreen": true,
         "description": "Captain Perez was killed while leading a tactical response to an armed bank robbery. Her decisive actions saved numerous hostages and prevented further loss of life.",
         "yearsOfService": 18
       },
@@ -99,6 +104,11 @@
         "name": "Detective John Coffey",
         "endOfWatch": "November 12, 2024",
         "image": "assets/mem_badge.svg",
+        "imageSize": {
+          "width": "w-48",
+          "height": "h-48"
+        },
+        "fullscreen": false,
         "description": "Detective Coffey was fatally shot while conducting an undercover investigation into organized crime. His dedication to justice and meticulous investigative work led to numerous successful prosecutions.",
         "yearsOfService": 5
       },
@@ -106,6 +116,11 @@
         "name": "Detective Cumrade Gun",
         "endOfWatch": "November 12, 2024",
         "image": "assets/mem_badge.svg",
+        "imageSize": {
+          "width": "w-48",
+          "height": "h-48"
+        },
+        "fullscreen": false,
         "description": "Detective Gun was killed while investigating a major drug trafficking operation. His extensive experience and leadership in the Narcotics Division had made him a key figure in combating organized crime.",
         "yearsOfService": 12
       },
@@ -113,6 +128,11 @@
         "name": "Deputy Ping Gun",
         "endOfWatch": "March 6, 2025",
         "image": "assets/mem_badge.svg",
+        "imageSize": {
+          "width": "w-48",
+          "height": "h-48"
+        },
+        "fullscreen": false,
         "description": "Deputy Gun was killed in a drive-by shooting while completing paperwork in his patrol vehicle. Known for his dedication to community policing, he was a mentor to many young deputies.",
         "yearsOfService": 8
       }

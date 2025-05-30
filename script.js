@@ -106,10 +106,14 @@ function renderMemoriam(data) {
     memoriamContainer.innerHTML = ''; // Clear existing content
 
     data.memoriam.fallenHeroes.forEach(hero => {
+        const imageClasses = hero.fullscreen 
+            ? 'w-full h-full object-cover filter grayscale transition-all duration-500 group-hover:grayscale-0' 
+            : `${hero.imageSize.width} ${hero.imageSize.height} object-contain filter grayscale transition-all duration-500 group-hover:grayscale-0`;
+
         const heroCard = `
             <div class="memorial-card group relative overflow-hidden rounded-xl bg-gray-800 shadow-xl transition-all duration-500 hover:shadow-2xl">
                 <div class="relative h-64 overflow-hidden flex items-center justify-center bg-gray-900">
-                    <img src="${hero.image}" alt="${hero.name}" class="w-48 h-48 object-contain" draggable="false">
+                    <img src="${hero.image}" alt="${hero.name}" class="${imageClasses}" draggable="false">
                 </div>
                 <div class="p-6 bg-gray-800/95 backdrop-blur-sm">
                     <h3 class="text-2xl font-bold text-yellow-50 mb-1">${hero.name}</h3>
