@@ -95,28 +95,6 @@
             left: 100%;
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out forwards;
-            animation-delay: 1.4s;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .scroll-indicator:hover {
-            transform: translateX(-50%) translateY(-5px);
-        }
-
-        .scroll-indicator i {
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-        }
-
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -787,6 +765,15 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* Center reCAPTCHA */
+        .g-recaptcha {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto;
+            transform: scale(1);
+            transform-origin: center;
+        }
     </style>
 </head>
 <body class="bg-yellow-50">
@@ -824,9 +811,6 @@
                     <i class="fas fa-info-circle ml-2"></i>
                 </a>
             </div>
-        </div>
-        <div class="scroll-indicator" onclick="document.getElementById('benefits').scrollIntoView({behavior: 'smooth'})">
-            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
