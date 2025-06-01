@@ -91,12 +91,12 @@
       {
         "name": "Captain Emilia Perez",
         "endOfWatch": "August 28, 2024",
-        "image": "assets/emilia_perez.webp",
+        "image": "assets/mem_badge.svg",
         "imageSize": {
-          "width": "w-64",
-          "height": "h-64"
+          "width": "w-48",
+          "height": "h-48"
         },
-        "fullscreen": true,
+        "fullscreen": false,
         "description": "Captain Perez was killed while leading a tactical response to an armed bank robbery. Her decisive actions saved numerous hostages and prevented further loss of life.",
         "yearsOfService": 18
       },
