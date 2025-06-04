@@ -409,7 +409,6 @@
         }
         
         .deputy-card:hover {
-            transform: translateY(-10px) scale(1.02);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.4),
                 0 2px 5px rgba(0, 0, 0, 0.3),
@@ -721,6 +720,8 @@
         .memorial-card {
             transform: translateY(0);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .memorial-card:hover {
@@ -743,6 +744,30 @@
 
         .memorial-card:hover::before {
             transform: scaleX(1);
+        }
+
+        .memorial-card .image-container {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .memorial-card .content {
+            padding: 1.5rem;
+        }
+
+        .memorial-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .memorial-card .description {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .memorial-card .years-of-service {
+            font-size: 0.8rem;
         }
 
         @keyframes fadeInUp {
@@ -1161,10 +1186,59 @@
         #commandStaffModalContent .deputy-card {
             background: rgba(146, 64, 14, 0.95);
             border: 1px solid rgba(251, 191, 36, 0.2);
+            height: 600px;
+            padding: 0;
+            margin: 0;
+            transform: none;
+        }
+
+        #commandStaffModalContent .deputy-card:hover {
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(0, 0, 0, 0.2),
+                inset 0 0 30px rgba(0, 0, 0, 0.3);
+            transform: none;
+        }
+
+        #commandStaffModalContent .deputy-card .image-container {
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.3) 100%);
+            padding: 0;
+            margin: 0;
+        }
+
+        #commandStaffModalContent .deputy-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: grayscale(20%);
+            padding: 0;
+            margin: 0;
+            display: block;
+        }
+
+        #commandStaffModalContent .deputy-card:hover img {
+            filter: grayscale(0%);
         }
 
         #commandStaffModalContent .deputy-card .content {
             background: rgba(146, 64, 14, 0.95);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #commandStaffModalContent .deputy-card:hover .content {
+            transform: translateY(0);
         }
 
         #commandStaffModalContent .deputy-card h3 {
@@ -1209,6 +1283,12 @@
 
         #commandStaffModalContent .deputy-card:hover .position {
             color: #fef3c7;
+        }
+
+        #commandStaffModalContent .modal-body .grid {
+            gap: 1rem;
+            padding: 0;
+            margin: 0;
         }
 
         /* Fallen Heroes Modal Styles */

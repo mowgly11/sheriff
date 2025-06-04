@@ -112,18 +112,16 @@ function renderMemoriam(data) {
 
         const heroCard = `
             <div class="memorial-card group relative overflow-hidden rounded-xl bg-gray-800 shadow-xl transition-all duration-500 hover:shadow-2xl">
-                <div class="relative h-64 overflow-hidden flex items-center justify-center bg-gray-900">
+                <div class="image-container relative overflow-hidden flex items-center justify-center bg-gray-900">
                     <img src="${hero.image}" alt="${hero.name}" class="${imageClasses}" draggable="false">
                 </div>
-                <div class="p-6 bg-gray-800/95 backdrop-blur-sm">
-                    <h3 class="text-2xl font-bold text-yellow-50 mb-1">${hero.name}</h3>
-                    <p class="text-yellow-200 text-sm mb-4">End of Watch: ${hero.endOfWatch}</p>
-                    <p class="text-gray-300 mb-4 text-center">${hero.description}</p>
-                    <div class="flex items-center justify-center">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-shield-alt text-yellow-500"></i>
-                            <span class="text-sm text-gray-400">${hero.yearsOfService} Years of Service</span>
-                        </div>
+                <div class="content bg-gray-800/95 backdrop-blur-sm">
+                    <h3 class="text-yellow-50 font-bold">${hero.name}</h3>
+                    <p class="text-yellow-200 text-sm mb-2">End of Watch: ${hero.endOfWatch}</p>
+                    <p class="description text-gray-300">${hero.description}</p>
+                    <div class="years-of-service flex items-center justify-center text-gray-400">
+                        <i class="fas fa-shield-alt text-yellow-500 mr-2"></i>
+                        <span>${hero.yearsOfService} Years of Service</span>
                     </div>
                 </div>
             </div>
