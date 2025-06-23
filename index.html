@@ -29,23 +29,30 @@
             overflow: hidden;
         }
 
-        .hero-background {
+        .hero-carousel {
             position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out, transform 0.3s ease-out;
-            transform: translate(0px, 0px) scale(1.1);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
+            display: flex;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .hero-background.active {
-            opacity: 1;
+        .carousel-slide {
+            position: relative;
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 0.3s ease-out;
+        }
+
+        .carousel-slide:hover {
+            transform: scale(1.02);
         }
 
         .hero::before {
@@ -1874,7 +1881,6 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <!-- Dynamic background containers will be inserted here by JavaScript -->
         <div class="hero-content text-center">
             <div class="badge inline-block p-6 rounded-full">
                 <img src="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329" alt="LSSD Badge" class="h-32" draggable="false">
@@ -2215,29 +2221,28 @@
     </div>
 
     <script>
-        // Dynamic Background Slideshow
-        class HeroBackgroundSlideshow {
+        // Hero Background Carousel
+        class HeroCarousel {
             constructor() {
                 this.heroSection = document.querySelector('.hero');
                 this.backgrounds = [];
                 this.currentIndex = 0;
-                this.slideInterval = 5000; // 5 seconds
-                this.backgroundElements = [];
-                this.parallaxIntensity = 10; // Adjust this value to control parallax strength
-                this.isMouseTracking = false;
+                this.slideInterval = 7000; // 7 seconds
+                this.carouselContainer = null;
+                this.slides = [];
                 
                 this.init();
             }
             
             async init() {
                 await this.loadAvailableBackgrounds();
-                this.createBackgroundElements();
-                this.setupParallaxEffect();
-                this.startSlideshow();
+                if (this.backgrounds.length > 0) {
+                    this.createCarousel();
+                    this.startCarousel();
+                }
             }
             
             async loadAvailableBackgrounds() {
-                // List of potential background images
                 const potentialBackgrounds = [
                     'assets/bg.webp',
                     'assets/bg2.webp',
@@ -2259,89 +2264,45 @@
                             this.backgrounds.push(bg);
                         }
                     } catch (error) {
-                        // Image doesn't exist, skip it
                         continue;
                     }
                 }
                 
-                // Fallback: if no backgrounds found, use the original
+                // Fallback if no backgrounds found
                 if (this.backgrounds.length === 0) {
                     this.backgrounds.push('assets/bg.webp');
                 }
-                
-                console.log('Loaded backgrounds:', this.backgrounds);
             }
             
-            createBackgroundElements() {
-                // Create background elements for each image
-                this.backgrounds.forEach((bg, index) => {
-                    const bgElement = document.createElement('div');
-                    bgElement.className = 'hero-background';
-                    bgElement.style.backgroundImage = `url('${bg}')`;
+            createCarousel() {
+                // Create carousel container
+                this.carouselContainer = document.createElement('div');
+                this.carouselContainer.className = 'hero-carousel';
+                
+                // Create slides
+                this.backgrounds.forEach((bg) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    slide.style.backgroundImage = `url('${bg}')`;
                     
-                    // Make the first background active
-                    if (index === 0) {
-                        bgElement.classList.add('active');
-                    }
-                    
-                    // Insert before the hero-content
-                    this.heroSection.insertBefore(bgElement, this.heroSection.querySelector('.hero-content'));
-                    this.backgroundElements.push(bgElement);
+                    this.carouselContainer.appendChild(slide);
+                    this.slides.push(slide);
                 });
+                
+                // Insert carousel into hero section
+                this.heroSection.insertBefore(this.carouselContainer, this.heroSection.querySelector('.hero-content'));
+                
+                // Set initial position
+                this.updateCarouselPosition();
             }
             
-            setupParallaxEffect() {
-                // Mouse move event for parallax effect
-                this.heroSection.addEventListener('mousemove', (e) => {
-                    this.handleMouseMove(e);
-                });
-                
-                // Mouse enter event
-                this.heroSection.addEventListener('mouseenter', () => {
-                    this.isMouseTracking = true;
-                });
-                
-                // Mouse leave event - return to center
-                this.heroSection.addEventListener('mouseleave', () => {
-                    this.isMouseTracking = false;
-                    this.resetParallax();
-                });
+            updateCarouselPosition() {
+                const translateX = -this.currentIndex * 100;
+                this.carouselContainer.style.transform = `translateX(${translateX}%)`;
             }
             
-            handleMouseMove(e) {
-                if (!this.isMouseTracking) return;
-                
-                // Get hero section bounds
-                const rect = this.heroSection.getBoundingClientRect();
-                
-                // Calculate mouse position relative to the center of the hero section
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-                
-                // Calculate offset from center (normalized to -1 to 1)
-                const offsetX = (mouseX - centerX) / centerX;
-                const offsetY = (mouseY - centerY) / centerY;
-                
-                // Apply parallax transform to all background elements
-                this.backgroundElements.forEach((bgElement) => {
-                    const translateX = offsetX * this.parallaxIntensity;
-                    const translateY = offsetY * this.parallaxIntensity;
-                    
-                    bgElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(1.1)`;
-                });
-            }
-            
-            resetParallax() {
-                // Smoothly return backgrounds to center position
-                this.backgroundElements.forEach((bgElement) => {
-                    bgElement.style.transform = 'translate(0px, 0px) scale(1.1)';
-                });
-            }
-            
-            startSlideshow() {
-                // Only start slideshow if there are multiple backgrounds
+            startCarousel() {
+                // Only start if there are multiple backgrounds
                 if (this.backgrounds.length <= 1) {
                     return;
                 }
@@ -2352,20 +2313,15 @@
             }
             
             nextSlide() {
-                // Remove active class from current background
-                this.backgroundElements[this.currentIndex].classList.remove('active');
-                
-                // Move to next background
+                // Move to next slide
                 this.currentIndex = (this.currentIndex + 1) % this.backgrounds.length;
-                
-                // Add active class to new background
-                this.backgroundElements[this.currentIndex].classList.add('active');
+                this.updateCarouselPosition();
             }
         }
         
-        // Initialize the slideshow when the page loads
+        // Initialize carousel when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            new HeroBackgroundSlideshow();
+            new HeroCarousel();
         });
 
         // Mobile menu toggle with animations
