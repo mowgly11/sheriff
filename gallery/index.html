@@ -67,7 +67,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             transition: transform 0.4s ease;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .gallery-card:hover .image-container img {
@@ -221,11 +224,16 @@
         .modal-image {
             max-width: 95vw;
             max-height: 85vh;
+            width: auto;
+            height: auto;
             object-fit: contain;
+            object-position: center;
             border-radius: 0.5rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: absolute;
             transition: opacity 0.4s ease;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .modal-image.active {
@@ -678,7 +686,7 @@
                     photographer: item.posterNickname,
                     postDate: item.postDate.split('T')[0], // Convert ISO date to YYYY-MM-DD
                     image: item.url,
-                    thumbnail: item.url, // Use same image for thumbnail
+                    thumbnail: `${item.url}?width=400&height=300&fit=cover`, // Fixed thumbnail resolution
                     description: `Photo shared by ${item.posterNickname} on ${formatDate(item.postDate.split('T')[0])}.`,
                     category: "LSSD Photos",
                     profilePhotoUrl: item.profilePhotoUrl,
@@ -1040,7 +1048,8 @@
             const item = galleryData[index];
             
             const modalImage = document.getElementById('modalImage');
-            modalImage.src = item.image;
+            // Use fixed resolution for modal images
+            modalImage.src = `${item.image}?width=1200&height=900&fit=contain`;
             modalImage.alt = item.title;
             modalImage.className = 'modal-image active';
             
@@ -1116,7 +1125,8 @@
                 });
             };
             
-            newImage.src = item.image;
+            // Use fixed resolution for modal images
+            newImage.src = `${item.image}?width=1200&height=900&fit=contain`;
         }
 
         function previousImage() {
