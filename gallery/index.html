@@ -181,7 +181,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
         }
 
         .modal-overlay.active {
@@ -190,7 +190,7 @@
         }
 
         .modal-content {
-            max-width: 95vw;
+            max-width: 100%;
             max-height: 95vh;
             position: relative;
             opacity: 0;
@@ -211,10 +211,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            max-width: 80vw;
-            max-height: 80vh;
-            min-height: 400px;
-            margin-bottom: 0;
+            max-width: 95vw;
+            max-height: 60vh;
+            min-height: 200px;
+            margin-bottom: 0.75rem;
+            width: fit-content;
+            height: fit-content;
         }
 
         .modal-image {
@@ -227,22 +229,140 @@
             border-radius: 0.5rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: relative;
-            transition: opacity 0.4s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
+            transform: scale(1) translateZ(0);
+            opacity: 1;
+            
+            /* Handle very wide images */
+            min-height: 200px;
+            
+            /* Handle very tall images */
+            min-width: 200px;
         }
 
         .modal-image.active {
             opacity: 1;
+            transform: scale(1) translateZ(0);
             z-index: 2;
         }
 
         .modal-image.inactive {
             opacity: 0;
+            transform: scale(0.95) translateZ(0);
             z-index: 1;
             position: absolute;
             top: 0;
             left: 0;
+        }
+
+        .modal-image.entering {
+            opacity: 0;
+            transform: scale(1.05) translateZ(0);
+            z-index: 3;
+        }
+
+        .modal-image.exiting {
+            opacity: 0;
+            transform: scale(0.95) translateZ(0);
+            z-index: 1;
+        }
+
+        /* Loading state for image transitions */
+        .modal-image-container.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            margin: -20px 0 0 -20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: modalSpinner 1s linear infinite;
+            z-index: 10;
+            backdrop-filter: blur(2px);
+        }
+
+        @keyframes modalSpinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Smooth navigation button animations */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.7;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-50%) scale(1.1);
+            opacity: 1;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-nav:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .modal-nav.prev {
+            left: -4rem;
+        }
+
+        .modal-nav.next {
+            right: -4rem;
+        }
+
+        /* Specific handling for different aspect ratios */
+        .modal-image.wide-image {
+            max-height: 70vh;
+            width: auto;
+            /* Ensure very wide images don't become too small */
+            min-height: 300px;
+        }
+
+        .modal-image.tall-image {
+            max-width: 70vw;
+            height: auto;
+            /* Ensure very tall images don't become too small */
+            min-width: 300px;
+        }
+
+        .modal-image.square-image {
+            max-width: min(80vw, 80vh);
+            max-height: min(80vw, 80vh);
+        }
+
+        /* Handle extremely wide images (panoramic) */
+        .modal-image.ultra-wide {
+            max-height: 60vh;
+            width: auto;
+            min-height: 250px;
+        }
+
+        /* Handle extremely tall images */
+        .modal-image.ultra-tall {
+            max-width: 60vw;
+            height: auto;
+            min-width: 250px;
         }
 
         .modal-info {
@@ -287,36 +407,6 @@
             background: rgba(0, 0, 0, 0.9);
             transform: rotate(90deg);
             border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .modal-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            color: white;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.25rem;
-        }
-
-        .modal-nav:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .modal-nav.prev {
-            left: -4rem;
-        }
-
-        .modal-nav.next {
-            right: -4rem;
         }
 
         /* Loading Animation */
@@ -442,14 +532,68 @@
             }
 
             .modal-image-container {
-                max-height: 50vh;
-                min-height: 250px;
+                max-width: 95vw;
+                max-height: 60vh;
+                min-height: 200px;
                 margin-bottom: 0.75rem;
             }
 
             .modal-image {
                 max-width: 100%;
                 max-height: 100%;
+                min-height: 150px;
+                min-width: 150px;
+            }
+
+            /* Override aspect ratio classes for mobile */
+            .modal-image.wide-image {
+                max-height: 45vh;
+                width: auto;
+                min-height: 200px;
+            }
+
+            .modal-image.tall-image {
+                max-width: 85vw;
+                height: auto;
+                min-width: 200px;
+            }
+
+            .modal-image.square-image {
+                max-width: min(85vw, 50vh);
+                max-height: min(85vw, 50vh);
+            }
+
+            .modal-image.ultra-wide {
+                max-height: 40vh;
+                width: auto;
+                min-height: 180px;
+            }
+
+            .modal-image.ultra-tall {
+                max-width: 80vw;
+                height: auto;
+                min-width: 180px;
+            }
+
+            /* Mobile-specific transition adjustments */
+            .modal-image {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .modal-image.entering {
+                transform: scale(1.03) translateZ(0);
+            }
+
+            .modal-image.exiting {
+                transform: scale(0.97) translateZ(0);
+            }
+
+            /* Smaller loading spinner for mobile */
+            .modal-image-container.loading::after {
+                width: 30px;
+                height: 30px;
+                margin: -15px 0 0 -15px;
+                border-width: 2px;
             }
 
             .modal-info {
@@ -1032,11 +1176,49 @@
             modalImage.alt = item.photographer;
             modalImage.className = 'modal-image active';
             
+            // Detect image aspect ratio and apply appropriate class
+            modalImage.onload = function() {
+                applyAspectRatioClass(modalImage);
+            };
+            
+            // If image is already loaded (cached), apply class immediately
+            if (modalImage.complete) {
+                applyAspectRatioClass(modalImage);
+            }
+            
             // Remove the info section
             updateModalInfo(item);
             
             document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
+        }
+
+        function applyAspectRatioClass(imageElement) {
+            const aspectRatio = imageElement.naturalWidth / imageElement.naturalHeight;
+            
+            // Remove existing aspect ratio classes
+            imageElement.classList.remove('wide-image', 'tall-image', 'square-image', 'ultra-wide', 'ultra-tall');
+            
+            if (aspectRatio > 2.5) {
+                // Ultra-wide images (extreme panoramic)
+                imageElement.classList.add('ultra-wide');
+            } else if (aspectRatio > 1.8) {
+                // Very wide images (panoramic, landscape)
+                imageElement.classList.add('wide-image');
+            } else if (aspectRatio < 0.4) {
+                // Ultra-tall images (extreme portrait)
+                imageElement.classList.add('ultra-tall');
+            } else if (aspectRatio < 0.6) {
+                // Very tall images (portrait, vertical)
+                imageElement.classList.add('tall-image');
+            } else if (aspectRatio >= 0.8 && aspectRatio <= 1.2) {
+                // Square-ish images
+                imageElement.classList.add('square-image');
+            }
+            // Default handling for normal aspect ratios (no additional class needed)
+            
+            // Log for debugging (can be removed in production)
+            console.log(`Image aspect ratio: ${aspectRatio.toFixed(2)}, Applied class: ${imageElement.className}`);
         }
 
         function closeModal() {
@@ -1053,39 +1235,75 @@
             const container = document.querySelector('.modal-image-container');
             const currentImage = document.getElementById('modalImage');
             
+            // Add loading state
+            container.classList.add('loading');
+            
             // Create new image element
             const newImage = new Image();
-            newImage.className = 'modal-image inactive';
-            newImage.alt = item.title;
+            newImage.className = 'modal-image entering';
+            newImage.alt = item.photographer || item.title;
             
             // Preload new image
             newImage.onload = () => {
+                // Remove loading state
+                container.classList.remove('loading');
+                
+                // Apply aspect ratio class to new image
+                applyAspectRatioClass(newImage);
+                
+                // Position new image absolutely during transition
+                newImage.style.position = 'absolute';
+                newImage.style.top = '0';
+                newImage.style.left = '0';
+                newImage.style.width = '100%';
+                newImage.style.height = '100%';
+                
                 // Add new image to container
                 container.appendChild(newImage);
                 
-                // Start crossfade
+                // Force reflow before starting animation
+                newImage.offsetHeight;
+                
+                // Start smooth transition sequence
                 requestAnimationFrame(() => {
+                    // Start exit animation for current image
                     currentImage.classList.remove('active');
-                    currentImage.classList.add('inactive');
-                    newImage.classList.remove('inactive');
+                    currentImage.classList.add('exiting');
+                    
+                    // Start enter animation for new image
+                    newImage.classList.remove('entering');
                     newImage.classList.add('active');
                     
-                    // Update current index
+                    // Update current index immediately for responsive navigation
                     currentImageIndex = newIndex;
                     
-                    // Clean up old image
+                    // Clean up after transition completes
                     setTimeout(() => {
                         if (container.contains(currentImage)) {
                             container.removeChild(currentImage);
                         }
+                        
+                        // Reset new image as the main modal image
                         newImage.id = 'modalImage';
-                        // Reset position for the new active image
                         newImage.style.position = 'relative';
                         newImage.style.top = 'auto';
                         newImage.style.left = 'auto';
+                        newImage.style.width = 'auto';
+                        newImage.style.height = 'auto';
+                        
+                        // Clean up classes
+                        newImage.classList.remove('exiting', 'entering');
+                        
                         isTransitioning = false;
-                    }, 400);
+                    }, 600); // Match CSS transition duration
                 });
+            };
+            
+            // Handle image load error
+            newImage.onerror = () => {
+                console.error('Failed to load image:', item.image);
+                container.classList.remove('loading');
+                isTransitioning = false;
             };
             
             // Use original Discord CDN URL without invalid parameters
@@ -1093,11 +1311,13 @@
         }
 
         function previousImage() {
+            if (isTransitioning) return;
             const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : galleryData.length - 1;
             switchToImage(newIndex);
         }
 
         function nextImage() {
+            if (isTransitioning) return;
             const newIndex = currentImageIndex < galleryData.length - 1 ? currentImageIndex + 1 : 0;
             switchToImage(newIndex);
         }
@@ -1109,41 +1329,71 @@
             }
         });
 
+        // Enhanced keyboard navigation with debouncing
+        let keyboardDebounce = false;
+        
         document.addEventListener('keydown', (e) => {
-            if (document.getElementById('modalOverlay').classList.contains('active')) {
-                switch(e.key) {
-                    case 'Escape':
-                        closeModal();
-                        break;
-                    case 'ArrowLeft':
-                        previousImage();
-                        break;
-                    case 'ArrowRight':
-                        nextImage();
-                        break;
-                }
+            if (!document.getElementById('modalOverlay').classList.contains('active')) return;
+            if (keyboardDebounce) return;
+            
+            keyboardDebounce = true;
+            
+            switch(e.key) {
+                case 'Escape':
+                    closeModal();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    previousImage();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    nextImage();
+                    break;
             }
+            
+            // Reset debounce after animation
+            setTimeout(() => {
+                keyboardDebounce = false;
+            }, 300);
         });
 
-        // Touch gesture support for mobile
+        // Enhanced touch gesture support for mobile
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let touchStartTime = 0;
         const minSwipeDistance = 50;
+        const maxSwipeTime = 300;
+        const maxVerticalDistance = 100;
 
         document.getElementById('modalOverlay').addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            touchStartTime = Date.now();
         }, { passive: true });
 
         document.getElementById('modalOverlay').addEventListener('touchend', (e) => {
+            if (isTransitioning) return;
+            
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipeGesture();
+            touchEndY = e.changedTouches[0].screenY;
+            const touchEndTime = Date.now();
+            
+            handleEnhancedSwipeGesture(touchEndTime - touchStartTime);
         }, { passive: true });
 
-        function handleSwipeGesture() {
-            const swipeDistance = touchEndX - touchStartX;
+        function handleEnhancedSwipeGesture(swipeTime) {
+            const horizontalDistance = touchEndX - touchStartX;
+            const verticalDistance = Math.abs(touchEndY - touchStartY);
             
-            if (Math.abs(swipeDistance) > minSwipeDistance) {
-                if (swipeDistance > 0) {
+            // Only process horizontal swipes that are fast enough and not too vertical
+            if (Math.abs(horizontalDistance) > minSwipeDistance && 
+                swipeTime < maxSwipeTime && 
+                verticalDistance < maxVerticalDistance) {
+                
+                if (horizontalDistance > 0) {
                     // Swipe right - previous image
                     previousImage();
                 } else {
