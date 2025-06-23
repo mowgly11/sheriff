@@ -108,7 +108,7 @@
 
         .gallery-card .content {
             padding: 1.5rem;
-            text-align: center;
+            text-align: left;
         }
 
         .gallery-card .category-badge {
@@ -125,7 +125,7 @@
 
         .gallery-card .meta {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             color: #6b7280;
             font-size: 0.875rem;
@@ -211,8 +211,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            max-width: 95vw;
-            max-height: 90vh;
+            max-width: 80vw;
+            max-height: 80vh;
             min-height: 400px;
             margin-bottom: 0;
         }
@@ -976,15 +976,24 @@
             galleryGrid.innerHTML = data.map((item, index) => `
                 <div class="gallery-card" onclick="openModal(${galleryData.indexOf(item)})">
                     <div class="image-container">
-                        <img src="${item.thumbnail || item.image}" alt="${item.title}" loading="lazy">
+                        <img src="${item.thumbnail || item.image}" alt="${item.photographer}" loading="lazy">
                         <div class="overlay">
                             <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
                     <div class="content">
-                        <h3>${item.photographer}</h3>
-                        <div class="meta">
-                            <span><i class="fas fa-calendar mr-1"></i>${formatDate(item.postDate)}</span>
+                        <div class="flex items-center justify-center mb-3">
+                            ${item.profilePhotoUrl ? 
+                                `<img src="${item.profilePhotoUrl}" alt="${item.photographer}" class="w-12 h-12 rounded-full mr-3 border-2 border-yellow-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                 <div class="w-12 h-12 rounded-full mr-3 bg-yellow-200 border-2 border-yellow-300 items-center justify-center" style="display: none;"><i class="fas fa-user text-yellow-700"></i></div>` : 
+                                `<div class="w-12 h-12 rounded-full mr-3 bg-yellow-200 border-2 border-yellow-300 flex items-center justify-center"><i class="fas fa-user text-yellow-700"></i></div>`
+                            }
+                            <div class="text-left">
+                                <h3 class="text-lg font-bold text-yellow-800 mb-1">${item.photographer}</h3>
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-calendar mr-1"></i>${formatDate(item.postDate)}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
