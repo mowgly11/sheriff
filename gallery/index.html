@@ -223,6 +223,7 @@
             justify-content: center;
             max-width: 95vw;
             max-height: 70vh;
+            min-height: 400px;
             margin-bottom: 1rem;
         }
 
@@ -235,7 +236,7 @@
             object-position: center;
             border-radius: 0.5rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: absolute;
+            position: relative;
             transition: opacity 0.4s ease;
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
@@ -249,6 +250,9 @@
         .modal-image.inactive {
             opacity: 0;
             z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .modal-info {
@@ -445,6 +449,7 @@
 
             .modal-image-container {
                 max-height: 50vh;
+                min-height: 250px;
                 margin-bottom: 0.75rem;
             }
 
@@ -533,6 +538,7 @@
 
             .modal-image-container {
                 max-height: 40vh;
+                min-height: 200px;
             }
 
             .modal-image {
@@ -1102,7 +1108,7 @@
                     newImage.classList.remove('inactive');
                     newImage.classList.add('active');
                     
-                    // Update info and match width
+                    // Update info
                     setTimeout(() => {
                         updateModalInfo(item);
                         modalInfo.classList.remove('updating');
@@ -1111,8 +1117,14 @@
                     
                     // Clean up old image
                     setTimeout(() => {
-                        container.removeChild(currentImage);
+                        if (container.contains(currentImage)) {
+                            container.removeChild(currentImage);
+                        }
                         newImage.id = 'modalImage';
+                        // Reset position for the new active image
+                        newImage.style.position = 'relative';
+                        newImage.style.top = 'auto';
+                        newImage.style.left = 'auto';
                         isTransitioning = false;
                     }, 400);
                 });
