@@ -108,19 +108,11 @@
 
         .gallery-card .content {
             padding: 1.5rem;
+            text-align: center;
         }
 
         .gallery-card .category-badge {
-            display: inline-block;
-            background: #fbbf24;
-            color: #92400e;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            display: none;
         }
 
         .gallery-card h3 {
@@ -133,17 +125,15 @@
 
         .gallery-card .meta {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             color: #6b7280;
             font-size: 0.875rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
         }
 
         .gallery-card .description {
-            color: #4b5563;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            display: none;
         }
 
         /* Filter Buttons */
@@ -222,9 +212,9 @@
             align-items: center;
             justify-content: center;
             max-width: 95vw;
-            max-height: 70vh;
+            max-height: 90vh;
             min-height: 400px;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
         }
 
         .modal-image {
@@ -266,6 +256,7 @@
             max-width: 95vw;
             width: 100%;
             margin: 0 auto;
+            display: none;
         }
 
         .modal-info.updating {
@@ -704,12 +695,10 @@
                 // Map API data to gallery format
                 galleryData = apiData.map((item, index) => ({
                     id: index + 1,
-                    title: `LSSD Photo #${index + 1}`,
                     photographer: item.posterNickname,
                     postDate: item.postDate.split('T')[0], // Convert ISO date to YYYY-MM-DD
-                    image: item.url,
-                    thumbnail: `${item.url}?width=400&height=300&fit=cover`, // Fixed thumbnail resolution
-                    description: `Photo shared by ${item.posterNickname} on ${formatDate(item.postDate.split('T')[0])}.`,
+                    image: item.url, // Use original Discord CDN URL
+                    thumbnail: item.url, // Use same URL for thumbnail - Discord CDN doesn't support resize params
                     category: "LSSD Photos",
                     profilePhotoUrl: item.profilePhotoUrl,
                     messageId: item.messageId,
@@ -993,13 +982,10 @@
                         </div>
                     </div>
                     <div class="content">
-                        <span class="category-badge">${item.category}</span>
-                        <h3>${item.title}</h3>
+                        <h3>${item.photographer}</h3>
                         <div class="meta">
-                            <span><i class="fas fa-user mr-1"></i>${item.photographer}</span>
                             <span><i class="fas fa-calendar mr-1"></i>${formatDate(item.postDate)}</span>
                         </div>
-                        <p class="description">${item.description}</p>
                     </div>
                 </div>
             `).join('');
@@ -1015,32 +1001,8 @@
         }
 
         function updateModalInfo(item) {
-            const profilePhotoHtml = item.profilePhotoUrl ? 
-                `<img src="${item.profilePhotoUrl}" alt="${item.photographer}" class="w-8 h-8 rounded-full mr-3" onerror="this.style.display='none'">` : 
-                `<div class="w-8 h-8 rounded-full mr-3 bg-yellow-200 flex items-center justify-center"><i class="fas fa-user text-yellow-700"></i></div>`;
-            
-            document.getElementById('modalInfo').innerHTML = `
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="text-2xl font-bold text-yellow-800 mb-2">${item.title}</h3>
-                        <span class="inline-block bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">${item.category}</span>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="flex items-center">
-                        ${profilePhotoHtml}
-                        <div>
-                            <p class="text-sm text-gray-600 mb-1">Posted by</p>
-                            <p class="font-semibold"><i class="fas fa-user mr-2 text-yellow-600"></i>${item.photographer}</p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 mb-1">Date</p>
-                        <p class="font-semibold"><i class="fas fa-calendar mr-2 text-yellow-600"></i>${formatDate(item.postDate)}</p>
-                    </div>
-                </div>
-                <p class="text-gray-700 leading-relaxed">${item.description}</p>
-            `;
+            // Remove the modal info section - just show the image
+            document.getElementById('modalInfo').innerHTML = '';
         }
 
         function matchDescriptionToImage() {
@@ -1053,24 +1015,16 @@
             const item = galleryData[index];
             
             const modalImage = document.getElementById('modalImage');
-            // Use fixed resolution for modal images
-            modalImage.src = `${item.image}?width=1200&height=900&fit=contain`;
-            modalImage.alt = item.title;
+            // Use original Discord CDN URL without invalid parameters
+            modalImage.src = item.image;
+            modalImage.alt = item.photographer;
             modalImage.className = 'modal-image active';
             
-            modalImage.onload = () => {
-                matchDescriptionToImage();
-            };
-            
+            // Remove the info section
             updateModalInfo(item);
             
             document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Fallback in case onload doesn't fire
-            setTimeout(() => {
-                matchDescriptionToImage();
-            }, 200);
         }
 
         function closeModal() {
@@ -1086,15 +1040,11 @@
             const item = galleryData[newIndex];
             const container = document.querySelector('.modal-image-container');
             const currentImage = document.getElementById('modalImage');
-            const modalInfo = document.getElementById('modalInfo');
             
             // Create new image element
             const newImage = new Image();
             newImage.className = 'modal-image inactive';
             newImage.alt = item.title;
-            
-            // Add subtle info update
-            modalInfo.classList.add('updating');
             
             // Preload new image
             newImage.onload = () => {
@@ -1108,12 +1058,8 @@
                     newImage.classList.remove('inactive');
                     newImage.classList.add('active');
                     
-                    // Update info
-                    setTimeout(() => {
-                        updateModalInfo(item);
-                        modalInfo.classList.remove('updating');
-                        currentImageIndex = newIndex;
-                    }, 150);
+                    // Update current index
+                    currentImageIndex = newIndex;
                     
                     // Clean up old image
                     setTimeout(() => {
@@ -1130,8 +1076,8 @@
                 });
             };
             
-            // Use fixed resolution for modal images
-            newImage.src = `${item.image}?width=1200&height=900&fit=contain`;
+            // Use original Discord CDN URL without invalid parameters
+            newImage.src = item.image;
         }
 
         function previousImage() {
