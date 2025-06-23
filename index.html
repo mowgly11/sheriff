@@ -18,6 +18,7 @@
         }
         /* Custom CSS for elements that need more specific styling */
         .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('assets/bg.webp');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -38,6 +39,12 @@
             z-index: 0;
             display: flex;
             transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
+        }
+
+        .hero-carousel.loaded {
+            opacity: 1;
         }
 
         .carousel-slide {
@@ -2230,19 +2237,20 @@
                 this.slideInterval = 7000; // 7 seconds
                 this.carouselContainer = null;
                 this.slides = [];
+                this.loadedImages = 0;
                 
                 this.init();
             }
             
             async init() {
-                await this.loadAvailableBackgrounds();
+                await this.preloadBackgrounds();
                 if (this.backgrounds.length > 0) {
                     this.createCarousel();
                     this.startCarousel();
                 }
             }
             
-            async loadAvailableBackgrounds() {
+            async preloadBackgrounds() {
                 const potentialBackgrounds = [
                     'assets/bg.webp',
                     'assets/bg2.webp',
@@ -2256,19 +2264,23 @@
                     'assets/bg10.webp'
                 ];
                 
-                // Check which images actually exist
-                for (const bg of potentialBackgrounds) {
-                    try {
-                        const response = await fetch(bg, { method: 'HEAD' });
-                        if (response.ok) {
-                            this.backgrounds.push(bg);
-                        }
-                    } catch (error) {
-                        continue;
-                    }
-                }
+                // Preload images using Image objects (faster than fetch)
+                const imagePromises = potentialBackgrounds.map(src => {
+                    return new Promise((resolve) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            this.backgrounds.push(src);
+                            resolve(src);
+                        };
+                        img.onerror = () => resolve(null); // Skip failed images
+                        img.src = src;
+                    });
+                });
                 
-                // Fallback if no backgrounds found
+                // Wait for all images to load or fail
+                await Promise.all(imagePromises);
+                
+                // Ensure we have at least the first background
                 if (this.backgrounds.length === 0) {
                     this.backgrounds.push('assets/bg.webp');
                 }
@@ -2292,8 +2304,13 @@
                 // Insert carousel into hero section
                 this.heroSection.insertBefore(this.carouselContainer, this.heroSection.querySelector('.hero-content'));
                 
-                // Set initial position
+                // Set initial position and show carousel
                 this.updateCarouselPosition();
+                
+                // Fade in carousel once loaded
+                setTimeout(() => {
+                    this.carouselContainer.classList.add('loaded');
+                }, 100);
             }
             
             updateCarouselPosition() {
