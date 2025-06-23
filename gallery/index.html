@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Photo Gallery - Los Santos Sheriff's Department. View photos from our operations, training, community events, and more.">
+    <title>Photo Gallery - Los Santos Sheriff's Department</title>
+    <link rel="icon" type="image/png" href="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Oswald', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Full height layout with sticky footer */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Gallery Grid Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .gallery-card .image-container {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .gallery-card .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover .image-container img {
+            transform: scale(1.1);
+        }
+
+        .gallery-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .gallery-card .expand-icon {
+            color: white;
+            font-size: 2rem;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-card:hover .expand-icon {
+            transform: scale(1);
+        }
+
+        .gallery-card .content {
+            padding: 1.5rem;
+        }
+
+        .gallery-card .category-badge {
+            display: inline-block;
+            background: #fbbf24;
+            color: #92400e;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .gallery-card .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-card .description {
+            color: #4b5563;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: #92400e;
+            border: 2px solid #fbbf24;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #fbbf24;
+            color: #92400e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            max-width: 95vw;
+            max-height: 95vh;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .modal-image-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+
+        .modal-image {
+            max-width: 95vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-image.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .modal-image.inactive {
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .modal-info {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            color: #1f2937;
+            transition: opacity 0.3s ease, width 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .modal-info.updating {
+            opacity: 0.7;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-nav.prev {
+            left: -4rem;
+        }
+
+        .modal-nav.next {
+            right: -4rem;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #fbbf24;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-text {
+            color: #6b7280;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                padding: 1.5rem 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                padding: 1.5rem 0;
+            }
+
+            .gallery-card .image-container {
+                height: 200px;
+            }
+
+            .gallery-card .content {
+                padding: 1rem;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .modal-info {
+                padding: 1.5rem;
+            }
+
+            .modal-nav {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
+            }
+
+            .modal-nav.prev {
+                left: -3rem;
+            }
+
+            .modal-nav.next {
+                right: -3rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1rem 0;
+            }
+
+            .gallery-card .image-container {
+                height: 250px;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+                margin-bottom: 2rem;
+                padding: 0 1rem;
+            }
+
+            .filter-btn {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            /* Modal mobile improvements */
+            .modal-overlay {
+                padding: 1rem;
+            }
+
+            .modal-content {
+                max-width: 100%;
+                max-height: 95vh;
+            }
+
+            .modal-image {
+                max-width: 100%;
+                max-height: 60vh;
+            }
+
+            .modal-info {
+                padding: 1.25rem;
+                margin-top: 0.75rem;
+            }
+
+            .modal-info .grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .modal-close {
+                top: -2.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
+            }
+
+            .modal-nav {
+                display: none;
+            }
+
+            /* Error state mobile improvements */
+            .error-container {
+                padding: 1rem;
+                min-height: 70vh;
+            }
+
+            .error-container h2 {
+                font-size: 1.5rem;
+                line-height: 1.3;
+            }
+
+            .error-container .bg-white {
+                margin: 0 0.5rem 1.5rem;
+                padding: 1.25rem;
+            }
+
+            /* Loading state mobile */
+            .loading {
+                min-height: 50vh;
+                padding: 1.5rem;
+            }
+
+            .spinner {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 1rem;
+            }
+
+            .loading-text {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            /* Header mobile improvements */
+            .py-16 {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+
+            .text-4xl {
+                font-size: 2rem;
+            }
+
+            .text-xl {
+                font-size: 1.125rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-card .image-container {
+                height: 200px;
+            }
+
+            .gallery-card .content {
+                padding: 1rem;
+            }
+
+            .modal-image {
+                max-height: 50vh;
+            }
+
+            .text-4xl {
+                font-size: 1.75rem;
+            }
+
+            .py-16 {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-yellow-50">
+    <div class="main-content">
+        <!-- Navigation -->
+        <nav class="bg-yellow-800 text-yellow-50 shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-4">
+                        <a href="../index.html" class="cursor-pointer">
+                            <img src="https://images-ext-1.discordapp.net/external/PQEwnHkSNJCFNowcB-_biRoYD8xMjpzvM7YvN_j6n5o/https/i.imgur.com/XsGvrVu.png?format=webp&quality=lossless&width=329&height=329" alt="LSSD Badge" class="h-16 hover:scale-110 transition-transform duration-300" draggable="false">
+                        </a>
+                        <a href="../index.html" class="cursor-pointer">
+                            <div>
+                                <h1 class="text-2xl font-bold tracking-wider">LOS SANTOS</h1>
+                                <p class="text-lg tracking-widest">SHERIFF'S DEPARTMENT</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="hidden lg:flex items-center space-x-8">
+                        <a href="../index.html" class="text-yellow-50 hover:text-yellow-400 transition-colors">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                        <h2 class="text-xl font-bold text-yellow-400">PHOTO GALLERY</h2>
+                    </div>
+                    
+                    <button class="lg:hidden focus:outline-none" id="mobile-menu-button">
+                        <div class="w-6 h-0.5 bg-yellow-50 mb-1.5"></div>
+                        <div class="w-6 h-0.5 bg-yellow-50 mb-1.5"></div>
+                        <div class="w-6 h-0.5 bg-yellow-50"></div>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu -->
+                <div class="lg:hidden hidden py-4" id="mobile-menu">
+                    <a href="../index.html" class="block py-3 px-4 hover:bg-yellow-700 rounded-lg transition-colors duration-300">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <section class="py-16 bg-gradient-to-b from-yellow-800 to-yellow-700 text-yellow-50">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl lg:text-6xl font-bold mb-6">PHOTO GALLERY</h1>
+                <p class="text-xl lg:text-2xl mb-8 max-w-3xl mx-auto">
+                    Explore moments captured from our daily operations, training exercises, community events, and more.
+                </p>
+                <div class="flex items-center justify-center space-x-4 text-yellow-200">
+                    <i class="fas fa-camera text-2xl"></i>
+                    <span class="text-lg">Documenting Our Service to the Community</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <section class="py-12 flex-1">
+            <div class="container mx-auto px-4">
+                <!-- Filter Buttons -->
+                <div class="filter-buttons" id="filterButtons">
+                    <button class="filter-btn active" data-filter="all">All Photos</button>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Loading gallery...</p>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="gallery-grid" id="galleryGrid" style="display: none;">
+                    <!-- Gallery items will be dynamically inserted here -->
+                </div>
+
+                <!-- No Results Message -->
+                <div class="text-center py-12" id="noResults" style="display: none;">
+                    <i class="fas fa-search text-6xl text-gray-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-600 mb-2">No Photos Found</h3>
+                    <p class="text-gray-500">Try selecting a different category.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="modal-nav prev" onclick="previousImage()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="modal-nav next" onclick="nextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="modal-image-container">
+                <img class="modal-image active" id="modalImage" src="" alt="">
+            </div>
+            <div class="modal-info" id="modalInfo">
+                <!-- Modal info will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-yellow-900 text-yellow-50 py-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <p class="text-white text-sm">
+                    &copy; 2025 Los Santos Sheriff's Department. All rights reserved.
+                </p>
+                <div class="mt-4">
+                    <a href="../index.html" class="text-yellow-400 hover:text-yellow-300 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Main Site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let galleryData = [];
+        let currentImageIndex = 0;
+        let filteredData = [];
+        let isTransitioning = false;
+
+        // Load gallery data from API
+        async function loadGallery() {
+            try {
+                console.log('Loading gallery from API...');
+                
+                const response = await fetch('http://api.lscounty.life/images');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const apiData = await response.json();
+                console.log('API data received:', apiData);
+                
+                if (!Array.isArray(apiData) || apiData.length === 0) {
+                    throw new Error('No images found in API response');
+                }
+                
+                // Map API data to gallery format
+                galleryData = apiData.map((item, index) => ({
+                    id: index + 1,
+                    title: `LSSD Photo #${index + 1}`,
+                    photographer: item.posterNickname,
+                    postDate: item.postDate.split('T')[0], // Convert ISO date to YYYY-MM-DD
+                    image: item.url,
+                    thumbnail: item.url, // Use same image for thumbnail
+                    description: `Photo shared by ${item.posterNickname} on ${formatDate(item.postDate.split('T')[0])}.`,
+                    category: "LSSD Photos",
+                    profilePhotoUrl: item.profilePhotoUrl,
+                    messageId: item.messageId,
+                    channelId: item.channelId
+                })).reverse(); // Reverse to show newest first
+                
+                filteredData = [...galleryData];
+                
+                console.log(`Successfully loaded ${galleryData.length} images`);
+                
+                createFilterButtons();
+                displayGallery(galleryData);
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+                showDetailedError(error);
+            }
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('galleryGrid').style.display = 'grid';
+        }
+
+        function showDetailedError(error) {
+            const loadingElement = document.getElementById('loading');
+            let errorMessage = 'Unknown error occurred';
+            let solution = '';
+            
+            if (error.message.includes('CORS') || error.message.includes('Cross-Origin') || error.name === 'TypeError') {
+                errorMessage = 'Connection Blocked';
+                solution = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mt-6">
+                        <h4 class="font-semibold text-red-800 mb-3">Why is this happening?</h4>
+                        <p class="text-red-700 text-sm mb-3">Your browser is blocking the connection to our image server for security reasons (CORS policy).</p>
+                        <div class="text-left">
+                            <p class="font-semibold text-red-800 mb-2 text-sm">Quick Solutions:</p>
+                            <ul class="list-disc list-inside space-y-2 text-sm text-red-700">
+                                <li>Use the <strong>Demo Gallery</strong> button below to see how it works</li>
+                                <li>Contact your system administrator to enable CORS</li>
+                                <li>Access this page from the same server as the API</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else if (error.message.includes('HTTP error')) {
+                errorMessage = `Server Error: ${error.message}`;
+                solution = `
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-6">
+                        <p class="text-yellow-800 text-sm">The image server returned an error. This usually means:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-sm text-yellow-700">
+                            <li>The server is temporarily down</li>
+                            <li>The API endpoint has changed</li>
+                            <li>There's a server configuration issue</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (error.message.includes('No images found')) {
+                errorMessage = 'No Images Available';
+                solution = `
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+                        <p class="text-blue-800 text-sm">The server responded successfully but no images were found. This could mean:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-sm text-blue-700">
+                            <li>No images have been uploaded yet</li>
+                            <li>Images are still being processed</li>
+                            <li>The image database is empty</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                errorMessage = 'Connection Failed';
+                solution = `
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mt-6">
+                        <p class="text-gray-800 text-sm">Please check your internet connection and try again.</p>
+                    </div>
+                `;
+            }
+            
+            loadingElement.innerHTML = `
+                <div class="min-h-screen flex items-center justify-center px-4 py-8">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <!-- Error Icon -->
+                        <div class="bg-red-100 rounded-full p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-4xl text-red-600"></i>
+                        </div>
+                        
+                        <!-- Error Title -->
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Unable to Load Gallery</h2>
+                        
+                        <!-- Error Message -->
+                        <div class="bg-white rounded-lg shadow-lg p-6 mb-6 border border-gray-200">
+                            <h3 class="text-lg font-semibold text-red-700 mb-3">${errorMessage}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                We're having trouble connecting to the image server. Don't worry - you can still explore the gallery with our demo content!
+                            </p>
+                            ${solution}
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <button onclick="loadGallery()" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center">
+                                <i class="fas fa-redo mr-2"></i>
+                                Try Again
+                            </button>
+                            <button onclick="loadFallbackGallery()" class="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center">
+                                <i class="fas fa-images mr-2"></i>
+                                View Demo Gallery
+                            </button>
+                        </div>
+                        
+                        <!-- Help Text -->
+                        <p class="text-gray-500 text-sm mt-6 leading-relaxed">
+                            The demo gallery shows how the interface works with sample images. All features including image viewing, navigation, and filtering are fully functional.
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadFallbackGallery() {
+            console.log('Loading fallback gallery...');
+            // Fallback to demo data if API fails
+            galleryData = [
+                {
+                    id: 1,
+                    title: "LSSD Demo Photo #1",
+                    photographer: "Demo User",
+                    postDate: "2024-01-15",
+                    image: "https://picsum.photos/800/600?random=1",
+                    thumbnail: "https://picsum.photos/400/300?random=1",
+                    description: "This is a demo image while the API is unavailable.",
+                    category: "Demo Photos",
+                    profilePhotoUrl: "https://picsum.photos/32/32?random=100"
+                },
+                {
+                    id: 2,
+                    title: "LSSD Demo Photo #2",
+                    photographer: "Demo User",
+                    postDate: "2024-01-14",
+                    image: "https://picsum.photos/800/600?random=2",
+                    thumbnail: "https://picsum.photos/400/300?random=2",
+                    description: "This is a demo image while the API is unavailable.",
+                    category: "Demo Photos",
+                    profilePhotoUrl: "https://picsum.photos/32/32?random=101"
+                },
+                {
+                    id: 3,
+                    title: "LSSD Demo Photo #3",
+                    photographer: "Demo User",
+                    postDate: "2024-01-13",
+                    image: "https://picsum.photos/800/600?random=3",
+                    thumbnail: "https://picsum.photos/400/300?random=3",
+                    description: "This is a demo image while the API is unavailable.",
+                    category: "Demo Photos",
+                    profilePhotoUrl: "https://picsum.photos/32/32?random=102"
+                },
+                {
+                    id: 4,
+                    title: "LSSD Demo Photo #4",
+                    photographer: "Demo User",
+                    postDate: "2024-01-12",
+                    image: "https://picsum.photos/800/600?random=4",
+                    thumbnail: "https://picsum.photos/400/300?random=4",
+                    description: "This is a demo image while the API is unavailable.",
+                    category: "Demo Photos",
+                    profilePhotoUrl: "https://picsum.photos/32/32?random=103"
+                },
+                {
+                    id: 5,
+                    title: "LSSD Demo Photo #5",
+                    photographer: "Demo User",
+                    postDate: "2024-01-11",
+                    image: "https://picsum.photos/800/600?random=5",
+                    thumbnail: "https://picsum.photos/400/300?random=5",
+                    description: "This is a demo image while the API is unavailable.",
+                    category: "Demo Photos",
+                    profilePhotoUrl: "https://picsum.photos/32/32?random=104"
+                },
+                {
+                    id: 6,
+                    title: "LSSD Demo Photo #6",
+                    photographer: "Demo User",
+                    postDate: "2024-01-10",
+                    image: "https://picsum.photos/800/600?random=6",
+                    thumbnail: "https://picsum.photos/400/300?random=6",
+                    description: "This is a demo image while the API is unavailable.",
+                    category: "Demo Photos",
+                    profilePhotoUrl: "https://picsum.photos/32/32?random=105"
+                }
+            ];
+            
+            filteredData = [...galleryData];
+            
+            document.getElementById('loading').style.display = 'none';
+            createFilterButtons();
+            displayGallery(galleryData);
+            document.getElementById('galleryGrid').style.display = 'grid';
+            
+            // Show a prominent notice that this is demo content
+            const notice = document.createElement('div');
+            notice.className = 'bg-gradient-to-r from-yellow-100 to-orange-100 border-l-4 border-yellow-500 text-yellow-800 p-6 mb-8 mx-4 rounded-lg shadow-lg';
+            notice.innerHTML = `
+                <div class="flex flex-col sm:flex-row sm:items-center">
+                    <div class="flex items-center mb-3 sm:mb-0 sm:mr-4">
+                        <div class="bg-yellow-500 rounded-full p-2 mr-3">
+                            <i class="fas fa-info text-white text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg">Demo Mode Active</h3>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm sm:text-base leading-relaxed">
+                            You're viewing demo content with sample images. All gallery features are fully functional - try clicking on images, using the modal viewer, and testing the responsive design!
+                        </p>
+                        <button onclick="loadGallery()" class="mt-3 bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors inline-flex items-center">
+                            <i class="fas fa-redo mr-2"></i>
+                            Try Loading Real Gallery Again
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            const container = document.querySelector('#galleryGrid').parentElement;
+            container.insertBefore(notice, document.getElementById('galleryGrid'));
+        }
+
+        function createFilterButtons() {
+            const categories = [...new Set(galleryData.map(item => item.category))];
+            const buttonsContainer = document.getElementById('filterButtons');
+            
+            // Only add category buttons if there are multiple categories
+            if (categories.length > 1) {
+                categories.forEach(category => {
+                    const button = document.createElement('button');
+                    button.className = 'filter-btn';
+                    button.setAttribute('data-filter', category.toLowerCase().replace(/\s+/g, '-'));
+                    button.textContent = category;
+                    button.addEventListener('click', () => filterGallery(category));
+                    buttonsContainer.appendChild(button);
+                });
+            } else {
+                // If only one category, hide the filter section
+                buttonsContainer.style.display = 'none';
+            }
+        }
+
+        function filterGallery(category) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            
+            if (category === 'all') {
+                filteredData = [...galleryData];
+                document.querySelector('[data-filter="all"]').classList.add('active');
+            } else {
+                filteredData = galleryData.filter(item => item.category === category);
+                document.querySelector(`[data-filter="${category.toLowerCase().replace(/\s+/g, '-')}"]`).classList.add('active');
+            }
+
+            displayGallery(filteredData);
+        }
+
+        function displayGallery(data) {
+            const galleryGrid = document.getElementById('galleryGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (data.length === 0) {
+                galleryGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            galleryGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            galleryGrid.innerHTML = data.map((item, index) => `
+                <div class="gallery-card" onclick="openModal(${galleryData.indexOf(item)})">
+                    <div class="image-container">
+                        <img src="${item.thumbnail || item.image}" alt="${item.title}" loading="lazy">
+                        <div class="overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="category-badge">${item.category}</span>
+                        <h3>${item.title}</h3>
+                        <div class="meta">
+                            <span><i class="fas fa-user mr-1"></i>${item.photographer}</span>
+                            <span><i class="fas fa-calendar mr-1"></i>${formatDate(item.postDate)}</span>
+                        </div>
+                        <p class="description">${item.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function updateModalInfo(item) {
+            const profilePhotoHtml = item.profilePhotoUrl ? 
+                `<img src="${item.profilePhotoUrl}" alt="${item.photographer}" class="w-8 h-8 rounded-full mr-3" onerror="this.style.display='none'">` : 
+                `<div class="w-8 h-8 rounded-full mr-3 bg-yellow-200 flex items-center justify-center"><i class="fas fa-user text-yellow-700"></i></div>`;
+            
+            document.getElementById('modalInfo').innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-2xl font-bold text-yellow-800 mb-2">${item.title}</h3>
+                        <span class="inline-block bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">${item.category}</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="flex items-center">
+                        ${profilePhotoHtml}
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Posted by</p>
+                            <p class="font-semibold"><i class="fas fa-user mr-2 text-yellow-600"></i>${item.photographer}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Date</p>
+                        <p class="font-semibold"><i class="fas fa-calendar mr-2 text-yellow-600"></i>${formatDate(item.postDate)}</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 leading-relaxed">${item.description}</p>
+            `;
+        }
+
+        function matchDescriptionToImage() {
+            const modalImage = document.getElementById('modalImage');
+            const modalInfo = document.getElementById('modalInfo');
+            
+            if (modalImage && modalInfo) {
+                // Wait for image to be fully loaded and rendered
+                const updateWidth = () => {
+                    const imageWidth = modalImage.offsetWidth;
+                    modalInfo.style.width = `${imageWidth}px`;
+                };
+                
+                // Try to update immediately
+                updateWidth();
+                
+                // Also update after a short delay to ensure image is fully rendered
+                setTimeout(updateWidth, 100);
+                
+                // Update on window resize
+                window.addEventListener('resize', updateWidth);
+            }
+        }
+
+        function openModal(index) {
+            currentImageIndex = index;
+            const item = galleryData[index];
+            
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = item.image;
+            modalImage.alt = item.title;
+            modalImage.className = 'modal-image active';
+            
+            modalImage.onload = () => {
+                matchDescriptionToImage();
+            };
+            
+            updateModalInfo(item);
+            
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Fallback in case onload doesn't fire
+            setTimeout(() => {
+                matchDescriptionToImage();
+            }, 200);
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            isTransitioning = false;
+        }
+
+        function switchToImage(newIndex) {
+            if (isTransitioning || newIndex === currentImageIndex) return;
+            
+            isTransitioning = true;
+            const item = galleryData[newIndex];
+            const container = document.querySelector('.modal-image-container');
+            const currentImage = document.getElementById('modalImage');
+            const modalInfo = document.getElementById('modalInfo');
+            
+            // Create new image element
+            const newImage = new Image();
+            newImage.className = 'modal-image inactive';
+            newImage.alt = item.title;
+            
+            // Add subtle info update
+            modalInfo.classList.add('updating');
+            
+            // Preload new image
+            newImage.onload = () => {
+                // Add new image to container
+                container.appendChild(newImage);
+                
+                // Start crossfade
+                requestAnimationFrame(() => {
+                    currentImage.classList.remove('active');
+                    currentImage.classList.add('inactive');
+                    newImage.classList.remove('inactive');
+                    newImage.classList.add('active');
+                    
+                    // Update info and match width
+                    setTimeout(() => {
+                        updateModalInfo(item);
+                        modalInfo.classList.remove('updating');
+                        currentImageIndex = newIndex;
+                        
+                        // Match description width to new image
+                        setTimeout(() => {
+                            const imageWidth = newImage.offsetWidth;
+                            modalInfo.style.width = `${imageWidth}px`;
+                        }, 50);
+                    }, 150);
+                    
+                    // Clean up old image
+                    setTimeout(() => {
+                        container.removeChild(currentImage);
+                        newImage.id = 'modalImage';
+                        isTransitioning = false;
+                    }, 400);
+                });
+            };
+            
+            newImage.src = item.image;
+        }
+
+        function previousImage() {
+            const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : galleryData.length - 1;
+            switchToImage(newIndex);
+        }
+
+        function nextImage() {
+            const newIndex = currentImageIndex < galleryData.length - 1 ? currentImageIndex + 1 : 0;
+            switchToImage(newIndex);
+        }
+
+        // Event listeners
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('modalOverlay').classList.contains('active')) {
+                switch(e.key) {
+                    case 'Escape':
+                        closeModal();
+                        break;
+                    case 'ArrowLeft':
+                        previousImage();
+                        break;
+                    case 'ArrowRight':
+                        nextImage();
+                        break;
+                }
+            }
+        });
+
+        // Touch gesture support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 50;
+
+        document.getElementById('modalOverlay').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.getElementById('modalOverlay').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipeGesture();
+        }, { passive: true });
+
+        function handleSwipeGesture() {
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) > minSwipeDistance) {
+                if (swipeDistance > 0) {
+                    // Swipe right - previous image
+                    previousImage();
+                } else {
+                    // Swipe left - next image
+                    nextImage();
+                }
+            }
+        }
+
+        // Improve mobile touch experience
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add visual feedback for touch on gallery cards
+            document.addEventListener('touchstart', (e) => {
+                if (e.target.closest('.gallery-card')) {
+                    e.target.closest('.gallery-card').style.transform = 'scale(0.98)';
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                if (e.target.closest('.gallery-card')) {
+                    setTimeout(() => {
+                        e.target.closest('.gallery-card').style.transform = '';
+                    }, 150);
+                }
+            }, { passive: true });
+        });
+
+        // Filter all button
+        document.querySelector('[data-filter="all"]').addEventListener('click', () => filterGallery('all'));
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Initialize gallery
+        document.addEventListener('DOMContentLoaded', loadGallery);
+    </script>
+</body>
+</html>
