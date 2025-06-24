@@ -61,6 +61,34 @@
             position: relative;
             height: 250px;
             overflow: hidden;
+            background: #f3f4f6;
+        }
+
+        /* Progressive loading for gallery images */
+        .gallery-card .image-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin: -12px 0 0 -12px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #fbbf24;
+            border-radius: 50%;
+            animation: gallerySpinner 1s linear infinite;
+            z-index: 1;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-card .image-container.loaded::before {
+            opacity: 0;
+        }
+
+        @keyframes gallerySpinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .gallery-card .image-container img {
@@ -68,13 +96,51 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            transition: transform 0.4s ease;
+            transition: transform 0.4s ease, opacity 0.3s ease;
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
+            opacity: 0;
+            /* Optimize for high-res images */
+            image-rendering: auto;
+            transform: scale(1);
         }
 
-        .gallery-card:hover .image-container img {
+        .gallery-card .image-container img.loaded {
+            opacity: 1;
+        }
+
+        .gallery-card:hover .image-container img.loaded {
             transform: scale(1.1);
+        }
+
+        /* High-resolution image error handling */
+        .gallery-card .image-container .image-error {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f9fafb;
+            color: #6b7280;
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-card .image-container .image-error.show {
+            opacity: 1;
+        }
+
+        .gallery-card .image-container .image-error i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #d1d5db;
         }
 
         .gallery-card .overlay {
@@ -217,8 +283,11 @@
             margin-bottom: 0.75rem;
             width: fit-content;
             height: fit-content;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.5rem;
         }
 
+        /* High-resolution modal image handling */
         .modal-image {
             max-width: 100%;
             max-height: 100%;
@@ -230,16 +299,21 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: relative;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            image-rendering: auto;
             transform: scale(1) translateZ(0);
-            opacity: 1;
+            opacity: 0;
             
             /* Handle very wide images */
             min-height: 200px;
             
             /* Handle very tall images */
             min-width: 200px;
+            
+            /* Optimize for high-resolution display */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .modal-image.active {
@@ -269,7 +343,7 @@
             z-index: 1;
         }
 
-        /* Loading state for image transitions */
+        /* Enhanced loading state for high-res image transitions */
         .modal-image-container.loading::after {
             content: '';
             position: absolute;
@@ -286,9 +360,30 @@
             backdrop-filter: blur(2px);
         }
 
+        /* High-resolution loading indicator */
+        .modal-image-container.high-res-loading::before {
+            content: 'Loading high-resolution image...';
+            position: absolute;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+            font-weight: 500;
+            white-space: nowrap;
+            z-index: 11;
+        }
+
         @keyframes modalSpinner {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced image sizing for ultra-high resolution */
+        .modal-image.ultra-high-res {
+            /* For images larger than 2000px, ensure proper scaling */
+            max-width: min(90vw, 2000px);
+            max-height: min(80vh, 2000px);
         }
 
         /* Smooth navigation button animations */
@@ -331,38 +426,60 @@
             right: -4rem;
         }
 
-        /* Specific handling for different aspect ratios */
+        /* High-resolution performance optimizations */
+        .modal-image.ultra-high-res {
+            /* Use GPU acceleration for large images */
+            will-change: transform;
+            transform: translateZ(0);
+            /* Optimize rendering */
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        /* Memory management for high-res images */
+        .gallery-card .image-container img {
+            /* Optimize memory usage for thumbnails */
+            image-rendering: auto;
+            /* Prevent memory leaks on mobile */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        /* Specific handling for different aspect ratios - enhanced for high-res */
         .modal-image.wide-image {
             max-height: 70vh;
             width: auto;
-            /* Ensure very wide images don't become too small */
+            /* Ensure very wide high-res images don't become too small */
             min-height: 300px;
+            max-width: min(95vw, 2500px);
         }
 
         .modal-image.tall-image {
             max-width: 70vw;
             height: auto;
-            /* Ensure very tall images don't become too small */
+            /* Ensure very tall high-res images don't become too small */
             min-width: 300px;
+            max-height: min(90vh, 2500px);
         }
 
         .modal-image.square-image {
-            max-width: min(80vw, 80vh);
-            max-height: min(80vw, 80vh);
+            max-width: min(80vw, 80vh, 2000px);
+            max-height: min(80vw, 80vh, 2000px);
         }
 
-        /* Handle extremely wide images (panoramic) */
+        /* Handle extremely wide images (panoramic) - high-res optimized */
         .modal-image.ultra-wide {
             max-height: 60vh;
             width: auto;
             min-height: 250px;
+            max-width: min(98vw, 3000px);
         }
 
-        /* Handle extremely tall images */
+        /* Handle extremely tall images - high-res optimized */
         .modal-image.ultra-tall {
             max-width: 60vw;
             height: auto;
             min-width: 250px;
+            max-height: min(95vh, 3000px);
         }
 
         .modal-info {
@@ -385,34 +502,55 @@
 
         .modal-close {
             position: fixed;
-            top: 0.75rem;
-            right: 0.75rem;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
             color: white;
-            width: 2.75rem;
-            height: 2.75rem;
+            width: 3.5rem;
+            height: 3.5rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 1.125rem;
+            font-size: 1.375rem;
             z-index: 2001;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            font-weight: 600;
         }
 
         .modal-close:hover {
-            background: rgba(0, 0, 0, 0.95);
-            transform: rotate(90deg) scale(1.1);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: rgba(220, 38, 38, 0.95);
+            transform: rotate(90deg) scale(1.15);
+            border-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .modal-close:active {
-            transform: rotate(90deg) scale(0.95);
+            transform: rotate(90deg) scale(1.05);
+        }
+
+        /* Enhanced visibility on all screen sizes */
+        .modal-close::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-close:hover::before {
+            opacity: 1;
         }
 
         /* Loading Animation */
@@ -1131,8 +1269,12 @@
 
             galleryGrid.innerHTML = data.map((item, index) => `
                 <div class="gallery-card" onclick="openModal(${galleryData.indexOf(item)})">
-                    <div class="image-container">
-                        <img src="${item.thumbnail || item.image}" alt="${item.photographer}" loading="lazy">
+                    <div class="image-container" data-image-url="${item.thumbnail || item.image}">
+                        <img src="" alt="${item.photographer}" loading="lazy" style="display: none;">
+                        <div class="image-error">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>Image failed to load</div>
+                        </div>
                         <div class="overlay">
                             <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
@@ -1154,6 +1296,69 @@
                     </div>
                 </div>
             `).join('');
+
+            // Initialize progressive image loading for gallery
+            setTimeout(() => initializeGalleryImageLoading(), 100);
+        }
+
+        // Progressive image loading for gallery thumbnails
+        function initializeGalleryImageLoading() {
+            const imageContainers = document.querySelectorAll('.gallery-card .image-container');
+            
+            // Use Intersection Observer for lazy loading
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        loadGalleryImage(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                // Start loading when image is 200px away from viewport
+                rootMargin: '200px'
+            });
+
+            imageContainers.forEach(container => {
+                imageObserver.observe(container);
+            });
+        }
+
+        function loadGalleryImage(container) {
+            const img = container.querySelector('img');
+            const errorDiv = container.querySelector('.image-error');
+            const imageUrl = container.dataset.imageUrl;
+            
+            if (!imageUrl || img.src) return; // Already loaded or no URL
+
+            // Create a new image to test loading
+            const testImage = new Image();
+            
+            testImage.onload = function() {
+                // Monitor performance for gallery images
+                monitorImagePerformance(this, 'gallery');
+                
+                // Image loaded successfully
+                img.src = imageUrl;
+                img.style.display = 'block';
+                img.classList.add('loaded');
+                container.classList.add('loaded');
+                errorDiv.classList.remove('show');
+                
+                // Check if it's a high-resolution image
+                if (this.naturalWidth > 1500 || this.naturalHeight > 1500) {
+                    console.log(`High-res gallery image loaded: ${this.naturalWidth}x${this.naturalHeight}`);
+                }
+            };
+            
+            testImage.onerror = function() {
+                // Image failed to load
+                console.error('Failed to load gallery image:', imageUrl);
+                container.classList.add('loaded'); // Remove loading spinner
+                errorDiv.classList.add('show');
+            };
+            
+            // Start loading
+            testImage.src = imageUrl;
         }
 
         function formatDate(dateString) {
@@ -1180,20 +1385,34 @@
             const item = galleryData[index];
             
             const modalImage = document.getElementById('modalImage');
-            // Use original Discord CDN URL without invalid parameters
-            modalImage.src = item.image;
+            const container = document.querySelector('.modal-image-container');
+            
+            // Reset modal image state
+            modalImage.className = 'modal-image';
+            modalImage.src = '';
             modalImage.alt = item.photographer;
-            modalImage.className = 'modal-image active';
             
-            // Detect image aspect ratio and apply appropriate class
-            modalImage.onload = function() {
-                applyAspectRatioClass(modalImage);
-            };
+            // Show loading state
+            container.classList.add('loading');
             
-            // If image is already loaded (cached), apply class immediately
-            if (modalImage.complete) {
-                applyAspectRatioClass(modalImage);
+            // Check if it's likely a high-resolution image
+            if (item.image.includes('cdn.discordapp.com') || 
+                item.image.includes('media.discordapp.net')) {
+                container.classList.add('high-res-loading');
             }
+            
+            // Load the image with enhanced error handling
+            loadModalImage(modalImage, item.image, () => {
+                // Success callback
+                container.classList.remove('loading', 'high-res-loading');
+                modalImage.classList.add('active');
+                applyAspectRatioClass(modalImage);
+            }, () => {
+                // Error callback
+                console.error('Failed to load modal image:', item.image);
+                container.classList.remove('loading', 'high-res-loading');
+                showModalImageError(container, item);
+            });
             
             // Remove the info section
             updateModalInfo(item);
@@ -1202,11 +1421,163 @@
             document.body.style.overflow = 'hidden';
         }
 
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            isTransitioning = false;
+            
+            // Memory cleanup for high-resolution images
+            cleanupModalImages();
+        }
+
+        // Memory management for high-resolution images
+        function cleanupModalImages() {
+            const modalImage = document.getElementById('modalImage');
+            const container = document.querySelector('.modal-image-container');
+            
+            // Remove any leftover image elements from transitions
+            const extraImages = container.querySelectorAll('img:not(#modalImage)');
+            extraImages.forEach(img => {
+                img.src = ''; // Clear the source to free memory
+                if (img.parentNode) {
+                    img.parentNode.removeChild(img);
+                }
+            });
+            
+            // Clear modal image source if it's a very large image
+            if (modalImage && modalImage.naturalWidth > 2000) {
+                console.log('Cleaning up high-resolution modal image');
+                // Don't clear the source immediately, just ensure cleanup happens
+                setTimeout(() => {
+                    if (!document.getElementById('modalOverlay').classList.contains('active')) {
+                        modalImage.src = '';
+                    }
+                }, 1000);
+            }
+        }
+
+        // Performance monitoring for high-resolution images
+        function monitorImagePerformance(imageElement, context = 'unknown') {
+            if (!imageElement.naturalWidth || !imageElement.naturalHeight) return;
+            
+            const width = imageElement.naturalWidth;
+            const height = imageElement.naturalHeight;
+            const pixels = width * height;
+            const aspectRatio = width / height;
+            
+            // Log performance metrics for high-res images
+            if (pixels > 2000000) { // > 2MP
+                console.log(`High-res image performance [${context}]:`, {
+                    dimensions: `${width}x${height}`,
+                    megapixels: (pixels / 1000000).toFixed(1) + 'MP',
+                    aspectRatio: aspectRatio.toFixed(2),
+                    isUltraHighRes: pixels > 6000000, // > 6MP
+                    estimatedMemoryMB: ((pixels * 4) / (1024 * 1024)).toFixed(1) + 'MB' // RGBA
+                });
+                
+                // Warn about very large images
+                if (pixels > 9000000) { // > 9MP (3000x3000)
+                    console.warn('Ultra high-resolution image detected - performance may be impacted');
+                }
+            }
+        }
+
+        // Enhanced loadModalImage with performance monitoring
+        function loadModalImage(imageElement, imageUrl, onSuccess, onError) {
+            // Create a new image for preloading
+            const tempImage = new Image();
+            
+            // Add timeout for very large images
+            const loadTimeout = setTimeout(() => {
+                console.warn('Image loading timeout - image may be very large');
+                tempImage.src = ''; // Cancel loading
+                if (onError) onError();
+            }, 15000); // 15 second timeout for high-res images
+            
+            tempImage.onload = function() {
+                clearTimeout(loadTimeout);
+                
+                // Monitor performance
+                monitorImagePerformance(this, 'modal');
+                
+                // Check image dimensions
+                const width = this.naturalWidth;
+                const height = this.naturalHeight;
+                const fileSize = width * height; // Approximate complexity
+                
+                console.log(`Modal image loaded: ${width}x${height} (complexity: ${fileSize})`);
+                
+                // Apply the loaded image
+                imageElement.src = this.src;
+                
+                if (onSuccess) onSuccess();
+            };
+            
+            tempImage.onerror = function() {
+                clearTimeout(loadTimeout);
+                console.error('Failed to load image:', imageUrl);
+                if (onError) onError();
+            };
+            
+            // Start loading
+            tempImage.src = imageUrl;
+        }
+
+        function showModalImageError(container, item) {
+            const errorElement = document.createElement('div');
+            errorElement.className = 'modal-image-error';
+            errorElement.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 300px;
+                    color: rgba(255, 255, 255, 0.8);
+                    text-align: center;
+                    padding: 2rem;
+                ">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem; color: #fbbf24;"></i>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 600;">Image Failed to Load</h3>
+                    <p style="margin-bottom: 1rem; opacity: 0.8; max-width: 400px;">
+                        This high-resolution image couldn't be loaded. This might be due to network issues or the image being too large.
+                    </p>
+                    <button onclick="retryModalImage(${currentImageIndex})" style="
+                        background: #fbbf24;
+                        color: #92400e;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 0.5rem;
+                        border: none;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='#f59e0b'" onmouseout="this.style.background='#fbbf24'">
+                        <i class="fas fa-redo mr-2"></i>Try Again
+                    </button>
+                </div>
+            `;
+            
+            container.innerHTML = '';
+            container.appendChild(errorElement);
+        }
+
+        function retryModalImage(index) {
+            openModal(index);
+        }
+
         function applyAspectRatioClass(imageElement) {
             const aspectRatio = imageElement.naturalWidth / imageElement.naturalHeight;
+            const imageWidth = imageElement.naturalWidth;
+            const imageHeight = imageElement.naturalHeight;
             
             // Remove existing aspect ratio classes
-            imageElement.classList.remove('wide-image', 'tall-image', 'square-image', 'ultra-wide', 'ultra-tall');
+            imageElement.classList.remove('wide-image', 'tall-image', 'square-image', 'ultra-wide', 'ultra-tall', 'ultra-high-res');
+            
+            // Check for ultra-high resolution images
+            if (imageWidth > 2000 || imageHeight > 2000) {
+                imageElement.classList.add('ultra-high-res');
+                console.log(`Ultra high-res image detected: ${imageWidth}x${imageHeight}`);
+            }
             
             if (aspectRatio > 2.5) {
                 // Ultra-wide images (extreme panoramic)
@@ -1227,13 +1598,7 @@
             // Default handling for normal aspect ratios (no additional class needed)
             
             // Log for debugging (can be removed in production)
-            console.log(`Image aspect ratio: ${aspectRatio.toFixed(2)}, Applied class: ${imageElement.className}`);
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-            isTransitioning = false;
+            console.log(`Image: ${imageWidth}x${imageHeight}, aspect ratio: ${aspectRatio.toFixed(2)}, Applied classes: ${imageElement.className}`);
         }
 
         function switchToImage(newIndex) {
@@ -1244,18 +1609,38 @@
             const container = document.querySelector('.modal-image-container');
             const currentImage = document.getElementById('modalImage');
             
-            // Add loading state
+            // Add loading state with high-res detection
             container.classList.add('loading');
+            if (item.image.includes('cdn.discordapp.com') || 
+                item.image.includes('media.discordapp.net')) {
+                container.classList.add('high-res-loading');
+            }
             
             // Create new image element
             const newImage = new Image();
             newImage.className = 'modal-image entering';
             newImage.alt = item.photographer || item.title;
             
+            // Enhanced preloading with timeout for high-res images
+            const loadTimeout = setTimeout(() => {
+                console.warn('Image switch timeout - cancelling');
+                container.classList.remove('loading', 'high-res-loading');
+                isTransitioning = false;
+            }, 12000); // 12 second timeout for switching
+            
             // Preload new image
             newImage.onload = () => {
+                clearTimeout(loadTimeout);
+                
                 // Remove loading state
-                container.classList.remove('loading');
+                container.classList.remove('loading', 'high-res-loading');
+                
+                // Check for high-resolution and log
+                const width = newImage.naturalWidth;
+                const height = newImage.naturalHeight;
+                if (width > 1500 || height > 1500) {
+                    console.log(`High-res modal image switched: ${width}x${height}`);
+                }
                 
                 // Apply aspect ratio class to new image
                 applyAspectRatioClass(newImage);
@@ -1308,14 +1693,19 @@
                 });
             };
             
-            // Handle image load error
+            // Handle image load error with retry option
             newImage.onerror = () => {
-                console.error('Failed to load image:', item.image);
-                container.classList.remove('loading');
+                clearTimeout(loadTimeout);
+                console.error('Failed to load image in modal switch:', item.image);
+                container.classList.remove('loading', 'high-res-loading');
+                
+                // Show error state but allow navigation to continue
+                showModalImageError(container, item);
+                currentImageIndex = newIndex;
                 isTransitioning = false;
             };
             
-            // Use original Discord CDN URL without invalid parameters
+            // Start loading the new image
             newImage.src = item.image;
         }
 
