@@ -777,6 +777,27 @@
     </style>
 </head>
 <body class="bg-yellow-50">
+    <!-- DOJ Closure Alert Banner -->
+    <div id="doj-alert" class="bg-red-800 text-white py-4 px-4 shadow-lg relative z-50" style="display: block;">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-yellow-300 text-2xl animate-pulse"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg md:text-xl">🚨 DEPARTMENT CLOSURE NOTICE</h3>
+                    <p class="text-sm md:text-base opacity-90">
+                        The Los Santos Sheriff's Department has been temporarily closed by the Department of Justice (DOJ). 
+                        <strong>Time of reopening is currently unknown.</strong> All operations are suspended until further notice.
+                    </p>
+                </div>
+            </div>
+            <button onclick="dismissDOJAlert()" class="flex-shrink-0 ml-4 p-2 hover:bg-red-700 rounded-full transition-colors duration-200" title="Dismiss Alert">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+    
     <!-- Navigation -->
     <nav class="bg-yellow-800 text-yellow-50 shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4">
@@ -902,7 +923,34 @@
             <h2 class="text-4xl font-bold text-center mb-4 text-yellow-800">APPLICATION FORM</h2>
             <p class="text-center text-gray-600 max-w-2xl mx-auto mb-16">Complete the form below to begin your journey with the Los Santos Sheriff's Department.</p>
             
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-4xl mx-auto relative">
+                <!-- Application Form Closed Barrier -->
+                <div id="application-barrier" class="absolute inset-0 bg-white rounded-2xl z-10 flex items-center justify-center" style="display: none;">
+                    <div class="text-center">
+                        <!-- Barrier Design -->
+                        <div class="relative mb-6">
+                            <div class="bg-red-600 text-white px-8 py-4 rounded-lg shadow-2xl transform -rotate-12 border-4 border-red-700">
+                                <div class="flex items-center justify-center space-x-3">
+                                    <i class="fas fa-exclamation-triangle text-yellow-300 text-2xl"></i>
+                                    <div>
+                                        <h3 id="app-barrier-title" class="text-xl font-bold uppercase tracking-wider">APPLICATIONS CLOSED</h3>
+                                        <p id="app-barrier-subtitle" class="text-sm font-medium">Application form temporarily unavailable</p>
+                                    </div>
+                                    <i class="fas fa-exclamation-triangle text-yellow-300 text-2xl"></i>
+                                </div>
+                            </div>
+                            <!-- Barrier Stripes -->
+                            <div class="absolute -top-2 -left-2 w-full h-full bg-gradient-to-r from-red-500 via-yellow-400 to-red-500 rounded-lg transform rotate-12 opacity-20"></div>
+                            <div class="absolute -bottom-2 -right-2 w-full h-full bg-gradient-to-r from-yellow-400 via-red-500 to-yellow-400 rounded-lg transform -rotate-6 opacity-20"></div>
+                        </div>
+                        
+                        <!-- Reason Display -->
+                        <div class="bg-gray-50 rounded-lg p-6 max-w-md mx-auto">
+                            <p id="app-barrier-reason" class="text-sm text-gray-800 font-medium text-center">Sheriff's department is currently closed.</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <form id="application-form" class="space-y-8" action="https://formspree.io/f/mldbqqob" method="POST">
                     <!-- Personal Information -->
                     <div class="form-section">
@@ -1132,6 +1180,105 @@
                 submitButton.innerHTML = originalButtonText;
             }
         });
+
+        // Application Form Barrier Control
+        async function initializeApplicationForm() {
+            try {
+                const response = await fetch('../data.json');
+                const data = await response.json();
+                
+                const applicationBarrier = document.getElementById('application-barrier');
+                const appBarrierTitle = document.getElementById('app-barrier-title');
+                const appBarrierSubtitle = document.getElementById('app-barrier-subtitle');
+                const appBarrierReason = document.getElementById('app-barrier-reason');
+                
+                if (data.contactForm && !data.contactForm.isOpen) {
+                    // Form is closed - show barrier
+                    if (data.contactForm.closedMessage) {
+                        appBarrierTitle.textContent = data.contactForm.closedMessage.title === 'FORM CLOSED' ? 'APPLICATIONS CLOSED' : data.contactForm.closedMessage.title;
+                        appBarrierSubtitle.textContent = data.contactForm.closedMessage.subtitle === 'Contact form temporarily unavailable' ? 'Application form temporarily unavailable' : data.contactForm.closedMessage.subtitle;
+                        appBarrierReason.textContent = data.contactForm.closedMessage.reason || 'Sheriff\'s department is currently closed.';
+                    }
+                    applicationBarrier.style.display = 'flex';
+                } else {
+                    // Form is open - hide barrier
+                    applicationBarrier.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading application form settings:', error);
+                // On error, hide barrier to allow form access
+                document.getElementById('application-barrier').style.display = 'none';
+            }
+        }
+
+        // Initialize application form when page loads
+        document.addEventListener('DOMContentLoaded', initializeApplicationForm);
+
+        // DOJ Alert Management
+        function dismissDOJAlert() {
+            const alert = document.getElementById('doj-alert');
+            alert.style.transition = 'all 0.3s ease-out';
+            alert.style.transform = 'translateY(-100%)';
+            alert.style.opacity = '0';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 300);
+        }
+
+        // Initialize DOJ alert based on data.json configuration
+        async function initializeDOJAlert() {
+            try {
+                const response = await fetch('../data.json');
+                const data = await response.json();
+                
+                const alert = document.getElementById('doj-alert');
+                const alertIcon = alert.querySelector('.fas');
+                const alertTitle = alert.querySelector('h3');
+                const alertContent = alert.querySelector('p');
+                
+                if (data.dojAlert && data.dojAlert.isVisible) {
+                    // Update content if provided
+                    if (data.dojAlert.message) {
+                        if (data.dojAlert.message.icon) {
+                            alertIcon.className = data.dojAlert.message.icon + ' text-yellow-300 text-2xl animate-pulse';
+                        }
+                        if (data.dojAlert.message.title) {
+                            alertTitle.textContent = data.dojAlert.message.title;
+                        }
+                        if (data.dojAlert.message.content) {
+                            alertContent.innerHTML = data.dojAlert.message.content;
+                        }
+                    }
+                    
+                    // Show alert with slide-down animation
+                    alert.style.transform = 'translateY(-100%)';
+                    alert.style.transition = 'all 0.5s ease-out';
+                    alert.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        alert.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    // Hide alert if not visible
+                    alert.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading DOJ alert settings:', error);
+                // On error, show default alert
+                const alert = document.getElementById('doj-alert');
+                alert.style.transform = 'translateY(-100%)';
+                alert.style.transition = 'all 0.5s ease-out';
+                alert.style.display = 'block';
+                
+                setTimeout(() => {
+                    alert.style.transform = 'translateY(0)';
+                }, 100);
+            }
+        }
+
+        // Initialize DOJ alert when page loads
+        document.addEventListener('DOMContentLoaded', initializeDOJAlert);
     </script>
 </body>
 </html>

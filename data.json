@@ -198,5 +198,21 @@
       "url": "https://www.youtube.com/embed/CI3JrQtw5Yo",
       "title": "LSSD Latest Video"
     }
+  },
+  "contactForm": {
+    "isOpen": false,
+    "closedMessage": {
+      "title": "FORM CLOSED",
+      "subtitle": "Contact form temporarily unavailable",
+      "reason": "Sheriff's department is currently closed."
+    }
+  },
+  "dojAlert": {
+    "isVisible": true,
+    "message": {
+      "icon": "fas fa-exclamation-triangle",
+      "title": "🚨 DEPARTMENT CLOSURE NOTICE",
+      "content": "The Los Santos Sheriff's Department has been temporarily closed by the Department of Justice (DOJ). <strong>Time of reopening is currently unknown.</strong> All operations are suspended until further notice."
+    }
   }
 } 
