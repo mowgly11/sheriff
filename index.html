@@ -1837,6 +1837,451 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* Garage Door Form Barrier Styles */
+        .garage-door-panel {
+            position: relative;
+            box-shadow: 
+                inset 0 2px 4px rgba(255, 255, 255, 0.1),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .garage-door-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        .garage-door-slat {
+            position: relative;
+            box-shadow: 
+                inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .garage-door-slat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .garage-door-slat > div {
+            box-shadow: 
+                inset 1px 1px 3px rgba(0, 0, 0, 0.2),
+                inset -1px -1px 3px rgba(255, 255, 255, 0.4),
+                0 1px 2px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.05));
+        }
+
+        .garage-door-handle {
+            background: radial-gradient(circle at 30% 30%, #9ca3af, #6b7280);
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .police-tape {
+            animation: policeTapeFlicker 2s infinite alternate;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .police-tape span {
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.9),
+                0 0 10px rgba(255, 255, 0, 0.3);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.5));
+        }
+
+        .police-tape div {
+            box-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes policeTapeFlicker {
+            0% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
+        .garage-door-lock-icon {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+            animation: lockPulse 3s infinite;
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .hero-button {
+                width: 100%;
+                text-align: center;
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .deputy-card {
+                height: 400px;
+                margin: 0 1rem;
+            }
+
+            .deputy-card .image-container {
+                height: 100%;
+            }
+
+            .deputy-card .content {
+                padding: 1.5rem;
+            }
+
+            .deputy-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .deputy-card .position {
+                font-size: 1rem;
+            }
+
+            .deputy-card .description {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+
+            .division-card {
+                margin: 0 1rem;
+            }
+
+            .news-card {
+                margin: 0 1rem;
+            }
+
+            .news-card .content {
+                padding: 1.5rem;
+            }
+
+            .news-card h3 {
+                font-size: 1.25rem;
+            }
+
+            .news-card .excerpt {
+                font-size: 0.95rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-input,
+            .form-textarea {
+                padding: 0.75rem;
+            }
+
+            .submit-button {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .modal-header {
+                padding-right: 2rem;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .modal-body {
+                font-size: 0.95rem;
+            }
+
+            .modal-body img {
+                margin: 1rem 0;
+            }
+
+            .modal-body ul {
+                padding: 1rem;
+            }
+
+            .modal-close {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.75rem;
+            }
+
+            .nav-link.join-lssd {
+                padding: 0.5rem 1rem;
+            }
+
+            .mobile-nav-link {
+                font-size: 1rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .mobile-nav-link.join-lssd {
+                margin: 0.5rem 1rem;
+            }
+
+            .footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer h3 {
+                font-size: 1.25rem;
+            }
+
+            .footer p,
+            .footer li {
+                font-size: 0.9rem;
+            }
+
+            .social-links a {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            #back-to-top {
+                width: 2.5rem;
+                height: 2.5rem;
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .custom-alert {
+                width: 90%;
+                max-width: none;
+                margin: 0 1rem;
+            }
+
+            .alert-content {
+                padding: 1rem;
+            }
+
+            .alert-title {
+                font-size: 1.1rem;
+            }
+
+            .alert-message {
+                font-size: 0.9rem;
+            }
+
+            .alert-close {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        /* Additional Mobile Optimizations */
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .deputy-card {
+                height: 350px;
+            }
+
+            .deputy-card h3 {
+                font-size: 1.25rem;
+            }
+
+            .deputy-card .position {
+                font-size: 0.9rem;
+            }
+
+            .deputy-card .description {
+                font-size: 0.9rem;
+            }
+
+            .division-card {
+                padding: 1.25rem;
+            }
+
+            .division-card h3 {
+                font-size: 1.25rem;
+            }
+
+            .division-card p {
+                font-size: 0.9rem;
+            }
+
+            .news-card .category-badge {
+                font-size: 0.75rem;
+                padding: 0.35rem 0.75rem;
+            }
+
+            .form-section {
+                padding: 1.25rem;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+            }
+
+            .form-input,
+            .form-textarea {
+                font-size: 0.9rem;
+            }
+
+            .form-checkbox-wrapper {
+                padding-left: 20px;
+            }
+
+            .checkbox-custom {
+                width: 20px;
+                height: 20px;
+            }
+
+            .checkbox-label {
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                padding: 1.25rem;
+            }
+
+            .modal-header h2 {
+                font-size: 1.25rem;
+            }
+
+            .modal-body {
+                font-size: 0.9rem;
+            }
+
+            .nav-link {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .mobile-nav-link {
+                font-size: 0.95rem;
+                padding: 0.6rem 0.8rem;
+            }
+
+            .footer {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer h3 {
+                font-size: 1.1rem;
+            }
+
+            .footer p,
+            .footer li {
+                font-size: 0.85rem;
+            }
+
+            .social-links a {
+                width: 1.75rem;
+                height: 1.75rem;
+            }
+
+            #back-to-top {
+                width: 2.25rem;
+                height: 2.25rem;
+            }
+
+            .custom-alert {
+                margin: 0 0.75rem;
+            }
+
+            .alert-content {
+                padding: 0.75rem;
+            }
+
+            .alert-title {
+                font-size: 1rem;
+            }
+
+            .alert-message {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Landscape Mode Optimizations */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .hero {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                padding: 3rem 1rem;
+            }
+
+            .deputy-card {
+                height: 300px;
+            }
+
+            .modal-content {
+                max-height: 85vh;
+            }
+        }
+
+        /* Tablet Optimizations */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .deputy-card {
+                height: 450px;
+            }
+
+            .division-card {
+                margin: 0 0.5rem;
+            }
+
+            .news-card {
+                margin: 0 0.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-yellow-50">
@@ -2075,28 +2520,117 @@
                 <!-- Contact Form -->
                 <div class="bg-white rounded-2xl shadow-xl p-8 relative">
                     <!-- Form Closed Barrier -->
-                    <div id="form-barrier" class="absolute inset-0 bg-white rounded-2xl z-10 flex items-center justify-center" style="display: none;">
-                        <div class="text-center">
-                            <!-- Barrier Design -->
-                            <div class="relative mb-6">
-                                <div class="bg-red-600 text-white px-8 py-4 rounded-lg shadow-2xl transform -rotate-12 border-4 border-red-700">
-                                    <div class="flex items-center justify-center space-x-3">
-                                        <i class="fas fa-exclamation-triangle text-yellow-300 text-2xl"></i>
-                                        <div>
-                                            <h3 id="barrier-title" class="text-xl font-bold uppercase tracking-wider">FORM CLOSED</h3>
-                                            <p id="barrier-subtitle" class="text-sm font-medium">Contact form temporarily unavailable</p>
-                                        </div>
-                                        <i class="fas fa-exclamation-triangle text-yellow-300 text-2xl"></i>
-                                    </div>
-                                </div>
-                                <!-- Barrier Stripes -->
-                                <div class="absolute -top-2 -left-2 w-full h-full bg-gradient-to-r from-red-500 via-yellow-400 to-red-500 rounded-lg transform rotate-12 opacity-20"></div>
-                                <div class="absolute -bottom-2 -right-2 w-full h-full bg-gradient-to-r from-yellow-400 via-red-500 to-yellow-400 rounded-lg transform -rotate-6 opacity-20"></div>
+                    <div id="form-barrier" class="absolute inset-0 bg-gray-800 rounded-2xl z-10 flex items-center justify-center overflow-hidden" style="display: none;">
+                        <!-- Garage Door Effect - Horizontal Slats -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-gray-300 via-gray-200 to-gray-300"></div>
+                        
+                        <!-- Horizontal Door Slats -->
+                        <div class="absolute inset-0 flex flex-col">
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
                             </div>
-                            
-                            <!-- Reason Display -->
-                            <div class="bg-gray-50 rounded-lg p-6 max-w-md mx-auto">
-                                <p id="barrier-reason" class="text-sm text-gray-800 font-medium text-center">Sheriff's department is currently closed.</p>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full border-b border-gray-500 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-100 to-gray-200 shadow-inner"></div>
+                            </div>
+                            <div class="garage-door-slat flex-1 w-full bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 shadow-inner relative">
+                                <div class="absolute inset-0.5 border border-gray-400 rounded bg-gradient-to-r from-gray-200 to-gray-100 shadow-inner"></div>
+                            </div>
+                        </div>
+
+                        <!-- Side Tracks -->
+                        <div class="absolute left-0 top-0 w-8 h-full bg-gray-500 shadow-lg border-r-4 border-gray-400">
+                            <div class="w-full h-full bg-gradient-to-r from-gray-400 to-gray-300 flex flex-col justify-center items-center space-y-4">
+                                <!-- Track guides -->
+                                <div class="w-4 h-1 bg-gray-600 rounded-full"></div>
+                                <div class="w-4 h-1 bg-gray-600 rounded-full"></div>
+                                <div class="w-4 h-1 bg-gray-600 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="absolute right-0 top-0 w-8 h-full bg-gray-500 shadow-lg border-l-4 border-gray-400">
+                            <div class="w-full h-full bg-gradient-to-r from-gray-300 to-gray-400 flex flex-col justify-center items-center space-y-4">
+                                <!-- Track guides -->
+                                <div class="w-4 h-1 bg-gray-600 rounded-full"></div>
+                                <div class="w-4 h-1 bg-gray-600 rounded-full"></div>
+                                <div class="w-4 h-1 bg-gray-600 rounded-full"></div>
+                            </div>
+                        </div>
+
+                        <!-- Door Handle/Lock Mechanism -->
+                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                            <div class="garage-door-handle w-16 h-4 bg-gray-500 rounded shadow-lg flex items-center justify-center">
+                                <div class="w-8 h-2 bg-gray-400 rounded-sm"></div>
+                            </div>
+                        </div>
+
+                        <!-- Police Tape -->
+                        <div class="police-tape absolute top-0 left-0 w-full h-16 bg-yellow-400 transform -rotate-3 shadow-lg z-20 flex items-center justify-center" style="background: repeating-linear-gradient(45deg, #FFF700, #FFF700 20px, #000 20px, #000 40px);">
+                            <div class="bg-black bg-opacity-80 px-4 py-2 rounded transform rotate-3">
+                                <span class="text-yellow-300 font-black text-xl tracking-wider uppercase">⚠️ POLICE LINE - DO NOT CROSS ⚠️</span>
+                            </div>
+                        </div>
+                        
+                        <div class="police-tape absolute bottom-0 left-0 w-full h-16 bg-yellow-400 transform rotate-2 shadow-lg z-20 flex items-center justify-center" style="background: repeating-linear-gradient(-45deg, #FFF700, #FFF700 20px, #000 20px, #000 40px);">
+                            <div class="bg-black bg-opacity-80 px-4 py-2 rounded transform -rotate-2">
+                                <span class="text-yellow-300 font-black text-xl tracking-wider uppercase">⚠️ POLICE LINE - DO NOT CROSS ⚠️</span>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="relative z-30 text-center">
+                            <div class="bg-red-900 bg-opacity-90 rounded-lg p-8 border-4 border-red-600">
+                                <div class="mb-4">
+                                    <i class="garage-door-lock-icon fas fa-lock text-red-400 text-6xl mb-4"></i>
+                                </div>
+                                <h3 id="barrier-title" class="text-3xl font-bold text-red-400 mb-2 tracking-wider">FORM CLOSED</h3>
+                                <p id="barrier-subtitle" class="text-red-300 text-lg mb-4">Contact form temporarily unavailable</p>
+                                <div class="bg-black bg-opacity-50 rounded p-4">
+                                    <p id="barrier-reason" class="text-yellow-300 font-medium">Sheriff's department is currently closed.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
